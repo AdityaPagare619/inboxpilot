@@ -21,24 +21,46 @@ import {
 
 const SNAP_URL = `${import.meta.env.BASE_URL}snapshot.json`;
 const LS_THRESHOLDS = 'inboxpilot:thresholds';
+const LS_CORRECTIONS = 'inboxpilot:corrections';
+const LS_TUNE_EVENTS = 'inboxpilot:tune_events';
+const LS_HANDLED = 'inboxpilot:handled';
 
 let _snapshot = null;
 const _state = {
-  corrections: {},   // email_id -> {category, urgent}
-  tuneEvents: [],    // {n, after}
-  thresholds: null,  // applied overrides (persisted)
+  corrections: {},   // email_id -> {category, urgent}  (persisted)
+  tuneEvents: [],    // {n, after}                       (persisted)
+  thresholds: null,  // applied overrides                (persisted)
+  handled: {},       // email_id -> 'approved'|'corrected' (persisted)
 };
+
+function persistState() {
+  try {
+    localStorage.setItem(LS_CORRECTIONS, JSON.stringify(_state.corrections));
+    localStorage.setItem(LS_TUNE_EVENTS, JSON.stringify(_state.tuneEvents));
+    localStorage.setItem(LS_HANDLED, JSON.stringify(_state.handled));
+  } catch { /* private mode etc. — session still works in memory */ }
+}
+
+function rehydrateState() {
+  try {
+    const c = JSON.parse(localStorage.getItem(LS_CORRECTIONS) || 'null');
+    if (c && typeof c === 'object') _state.corrections = c;
+    const te = JSON.parse(localStorage.getItem(LS_TUNE_EVENTS) || 'null');
+    if (Array.isArray(te)) _state.tuneEvents = te;
+    const h = JSON.parse(localStorage.getItem(LS_HANDLED) || 'null');
+    if (h && typeof h === 'object') _state.handled = h;
+    const saved = JSON.parse(localStorage.getItem(LS_THRESHOLDS) || 'null');
+    if (saved && typeof saved === 'object') _state.thresholds = saved;
+  } catch { /* ignore */ }
+}
 
 async function snapshot() {
   if (_snapshot) return _snapshot;
   const r = await fetch(SNAP_URL);
   if (!r.ok) throw new Error(`snapshot ${r.status} — rebuild with web/tools/build_snapshot.py`);
   _snapshot = await r.json();
-  // restore applied thresholds from localStorage
-  try {
-    const saved = JSON.parse(localStorage.getItem(LS_THRESHOLDS) || 'null');
-    if (saved && typeof saved === 'object') _state.thresholds = saved;
-  } catch { /* ignore */ }
+  // restore session state from localStorage (corrections, tunes, handled, thresholds)
+  rehydrateState();
   return _snapshot;
 }
 
@@ -82,13 +104,18 @@ export const api = {
     const snap = await snapshot();
     const t = getThresholds(snap);
     const { emails, counts } = triageAll(snap, seed, t);
+    const handled = { ..._state.handled };
+    const digestPending = emails.filter((e) => e.decision?.action === 'digest' && !handled[e.id]).length;
     return {
       mode: 'demo',
       seed,
       counts,
       thresholds: t,
       emails,
-      greeting: morningGreeting(counts),
+      handled,
+      digest_pending: digestPending,
+      tuner_status: correctionStatus(Object.keys(_state.corrections).length),
+      greeting: morningGreeting({ ...counts, digest: digestPending }),
       demo_notes: snap.demo_notes,
     };
   },
@@ -105,6 +132,7 @@ export const api = {
     return {
       email: emailOnly,
       decision,
+      answers: s.answers[id] || null,
       questions: snap.questions,
       thresholds: getThresholds(snap),
       contacts: snap.contacts,
@@ -125,6 +153,7 @@ export const api = {
     if (!s || !s.answers[id]) throw new Error(`unknown email id ${JSON.stringify(id)}`);
 
     _state.corrections[id] = { category, urgent: urgent ?? null };
+    persistState();
     const tunerStatus = correctionStatus(Object.keys(_state.corrections).length);
 
     const t = getThresholds(snap);
@@ -172,6 +201,7 @@ export const api = {
       _state.thresholds = next;
       try { localStorage.setItem(LS_THRESHOLDS, JSON.stringify(next)); } catch { /* ignore */ }
       _state.tuneEvents.push({ n: report.n_labels, after: { ...report.after } });
+      persistState();
     }
     const countsBefore = countsFor(snap, seed, report.before);
     const countsAfter = countsFor(snap, seed, report.after);
@@ -182,6 +212,20 @@ export const api = {
       counts_before: countsBefore,
       counts_after: countsAfter,
     };
+  },
+
+  // Digest queue handling: approvals/corrections mark mail handled so the
+  // dashboard greeting and digest counts stay live. Persisted like the rest.
+  markHandled: async (id, kind) => {
+    _state.handled[id] = kind === 'corrected' ? 'corrected' : 'approved';
+    persistState();
+    return { ok: true, email_id: id, handled: _state.handled[id] };
+  },
+
+  unhandle: async (id) => {
+    delete _state.handled[id];
+    persistState();
+    return { ok: true, email_id: id };
   },
 
   audit: async (seed) => {

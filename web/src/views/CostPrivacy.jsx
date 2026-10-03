@@ -33,9 +33,10 @@ export default function CostPrivacy() {
       <div className="panel" style={{ borderColor: 'rgba(45,212,191,.35)' }}>
         <h3 className="panel-title">💸 The honest math</h3>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap' }}>
-          <span className="num" style={{ fontSize: 44, fontWeight: 800, color: 'var(--teal)' }}>${data.cost ?? '—'}</span>
+          <span className="num" style={{ fontSize: 44, fontWeight: 800, color: 'var(--teal)' }}>${data.cost?.per_year_usd ?? '—'}</span>
           <span className="note">per user per year — estimated Jev classification cost for a founder-scale inbox</span>
         </div>
+        {data.cost?.note && <div className="note" style={{ marginTop: 8 }}>{data.cost.note}</div>}
         <div className="callout" style={{ marginTop: 14 }}>
           Why so cheap? Jev answers <b>typed questions with calibrated probabilities</b> — no giant LLM prompt per mail, no output tokens billed.
           Three tiny decisions per email, 70–500ms each. You're paying for answers, not eloquence.

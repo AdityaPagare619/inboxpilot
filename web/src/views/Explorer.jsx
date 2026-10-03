@@ -35,6 +35,21 @@ function ExplainDetail({ id, seed }) {
   const branch = d.branch_rule || {};
   const contacts = data.contacts || [];
   const honesty = data.honesty || [];
+  const ans = data.answers || {};
+
+  // The static snapshot stores question definitions as an object keyed by id
+  // ({urgency, category, needs_reply}); the old server returned an array.
+  // Normalize defensively, then merge this mail's ACTUAL answers in so the
+  // panel shows what Jev said about THIS mail, not just the question text.
+  const qlist = (Array.isArray(data.questions)
+    ? data.questions
+    : Object.entries(data.questions || {}).map(([qid, q]) => ({ id: qid, ...q }))
+  ).map((q) => {
+    if (q.id === 'urgency') return { ...q, p: ans.urgency_p ?? d.urgency_p };
+    if (q.id === 'needs_reply') return { ...q, p: ans.needs_reply_p ?? d.needs_reply_p };
+    if (q.id === 'category') return { ...q, probabilities: ans.probs };
+    return q;
+  });
 
   const thRow = (name, val, desc) => (
     <div className="kv"><span className="k">{name} — {desc}</span><span className="v">{val}</span></div>
@@ -55,9 +70,9 @@ function ExplainDetail({ id, seed }) {
       </div>
 
       <div className="panel">
-        <h3 className="panel-title">🧠 The 3 Jev answers</h3>
-        {(data.questions || []).map((q, i) => <QuestionBlock key={q.id || i} q={q} i={i} />)}
-        {(!data.questions || data.questions.length === 0) && <div className="note">No question detail returned by the API.</div>}
+        <h3 className="panel-title">🧠 The 3 Jev answers — for this mail</h3>
+        {qlist.map((q, i) => <QuestionBlock key={q.id || i} q={q} i={i} />)}
+        {qlist.length === 0 && <div className="note">No question detail returned by the API.</div>}
       </div>
 
       <div className="panel">

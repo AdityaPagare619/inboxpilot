@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { api, catBadge, pct } from '../api';
 import { ConfBar, UrgencyMeter, Loading, ErrorBox, useApi } from '../components/ui';
 
@@ -14,7 +14,7 @@ function CorrectModal({ email, seed, onClose, onDone, notify }) {
     setSending(true);
     try {
       const r = await api.correct({ id: email.id, category, urgent, seed });
-      notify({ type: 'ok', msg: `✅ Correction logged — "${email.subject.slice(0, 40)}…" → ${category}${urgent ? ' · urgent' : ''}. Tuner fuel: ${r.tuner_status?.n_labels ?? '?'} labels.` });
+      notify({ type: 'ok', msg: `✅ Correction logged — "${email.subject.slice(0, 40)}…" → ${category} · ${urgent ? 'urgent' : 'not urgent'}. Tuner fuel: ${r.tuner_status?.n_labels ?? '?'} label${r.tuner_status?.n_labels === 1 ? '' : 's'}.` });
       onDone(r);
     } catch (e) {
       notify({ type: 'bad', msg: `❌ Correction failed: ${e.message}` });
@@ -49,29 +49,38 @@ function CorrectModal({ email, seed, onClose, onDone, notify }) {
 
 export default function Digest({ seed, notify }) {
   const { data, loading, error, reload } = useApi(() => api.inbox(seed), [seed]);
-  const [done, setDone] = useState({});       // id -> 'approved' | 'corrected'
+  // Handled state lives in the api layer (persisted to localStorage) so the
+  // dashboard greeting, digest counts, and tuner fuel all stay live — and
+  // survive a reload. `data.handled` is the source of truth after each fetch.
   const [correcting, setCorrecting] = useState(null);
   const [fuel, setFuel] = useState({ n_labels: 0, status: 'locked', message: 'Log corrections to fuel the tuner.' });
+
+  useEffect(() => {
+    if (data?.tuner_status) setFuel(data.tuner_status);
+  }, [data]);
 
   if (loading) return <Loading msg="Brewing your morning digest…" />;
   if (error) return <ErrorBox error={error} onRetry={reload} />;
 
+  const handled = data.handled || {};
   const digestMails = (data.emails || []).filter((e) => e.decision?.action === 'digest');
-  const pending = digestMails.filter((e) => !done[e.id]);
-  const finished = digestMails.filter((e) => done[e.id]);
+  const pending = digestMails.filter((e) => !handled[e.id]);
+  const finished = digestMails.filter((e) => handled[e.id]);
 
-  function approve(email) {
+  async function approve(email) {
+    await api.markHandled(email.id, 'approved');
     const s = email.decision?.suggested || {};
-    setDone((d) => ({ ...d, [email.id]: 'approved' }));
     notify({ type: 'ok', msg: `👍 Approved: “${(s.label || s.action || 'suggestion').replace(/_/g, ' ')}” applied to “${email.subject.slice(0, 36)}…”` });
+    reload();
   }
-  function undo(email) {
-    setDone((d) => { const n = { ...d }; delete n[email.id]; return n; });
+  async function undo(email) {
+    await api.unhandle(email.id);
     notify({ type: 'info', msg: `↩️ Undone — “${email.subject.slice(0, 36)}…” is back in the queue.` });
+    reload();
   }
-  function handleCorrected(resp) {
+  async function handleCorrected(resp) {
     setFuel(resp.tuner_status || fuel);
-    setDone((d) => ({ ...d, [resp.email_id]: 'corrected' }));
+    await api.markHandled(resp.email_id, 'corrected');
     setCorrecting(null);
     reload(); // corrections retriage the inbox server-side; refresh
   }
@@ -148,7 +157,7 @@ export default function Digest({ seed, notify }) {
               <div className="mail-head">
                 <div>
                   <span className="mail-from">{email.from}</span>
-                  <span className="done-stamp">{done[email.id] === 'approved' ? '✓ approved' : '✏ corrected'}</span>
+                  <span className="done-stamp">{handled[email.id] === 'approved' ? '✓ approved' : '✏ corrected'}</span>
                   <div className="mail-subj">{email.subject}</div>
                 </div>
                 <div className="mail-date">{email.date}</div>

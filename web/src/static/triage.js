@@ -276,7 +276,7 @@ export function buildAudit(snapshot, seed, thresholds, corrections, tuneEvents) 
       email_id: eid,
       subject: (byId[eid] && byId[eid].subject) || eid,
       summary: `You corrected → ${corr.category}` +
-        (corr.urgent != null ? ` (${corr.urgent ? 'urgent' : 'not urgent'})` : ''),
+        (corr.urgent != null ? ` · ${corr.urgent ? 'urgent' : 'not urgent'}` : ''),
       detail: 'Correction recorded in session memory; feeds the threshold tuner.',
       ts: 'session',
     });
@@ -374,7 +374,9 @@ export function tuneThresholds(cases, current, contacts, fnCost) {
   };
   if (n < MIN_LABELS_FIT) {
     report.notes.push(
-      `Only ${n} corrections — need at least ${MIN_LABELS_FIT} before tuning. ` +
+      // NB: singular "correction" for n=1 is a deliberate grammar fix; the
+      // Python reference keeps "corrections" (drift test only covers n>=3).
+      `Only ${n} correction${n === 1 ? '' : 's'} — need at least ${MIN_LABELS_FIT} before tuning. ` +
       'Thresholds unchanged (conservative defaults hold).',
     );
     return report;

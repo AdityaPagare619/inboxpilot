@@ -17,6 +17,39 @@ function Slider({ label, value, min, max, step, onChange, format, hint }) {
   );
 }
 
+function WhatIfTable({ before, after }) {
+  const keys = ['auto_label', 'auto_archive', 'digest'];
+  const labels = { auto_label: '🏷 auto-label', auto_archive: '🗄 auto-archive', digest: '📋 digest' };
+  const colors = { auto_label: '#2dd4bf', auto_archive: '#38bdf8', digest: '#a78bfa' };
+  return (
+    <div>
+      <div className="vs-tag">before → after · your sliders vs current thresholds</div>
+      <div className="whatif-head">
+        <span />
+        <span className="num">before</span>
+        <span className="num">after</span>
+        <span className="num">Δ</span>
+      </div>
+      {keys.map((k) => {
+        const b = before?.[k] ?? '—';
+        const a = after?.[k] ?? '—';
+        const d = (typeof b === 'number' && typeof a === 'number') ? a - b : null;
+        const dCls = d == null || d === 0 ? 'delta-zero' : d > 0 ? 'delta-pos' : 'delta-neg';
+        const dTxt = d == null ? '—' : d === 0 ? '=' : `${d > 0 ? '+' : ''}${d}`;
+        return (
+          <div key={k} className="whatif-row">
+            <span style={{ color: 'var(--txt-dim)', fontSize: 12.5 }}>{labels[k]}</span>
+            <span className="num" style={{ color: 'var(--txt-faint)' }}>{b}</span>
+            <span className="num" style={{ color: colors[k], fontWeight: 700 }}>{a}</span>
+            <span className={`num ${dCls}`} style={{ fontWeight: 700 }}>{dTxt}</span>
+          </div>
+        );
+      })}
+      <div className="note" style={{ marginTop: 8 }}>Δ is after − before. No arrows-to-self: each cell compares the two runs.</div>
+    </div>
+  );
+}
+
 function CountBars({ before, after, title }) {
   const keys = ['auto_label', 'auto_archive', 'digest'];
   const labels = { auto_label: '🏷 auto-label', auto_archive: '🗄 auto-archive', digest: '📋 digest' };
@@ -104,7 +137,7 @@ export default function Tuner({ seed, notify }) {
       <div className="view-head">
         <div>
           <h1 className="view-title">Tuner playground</h1>
-          <p className="view-sub">Move the sliders. Watch what the gate <i>would</i> do — then ask the real tuner to commit.</p>
+          <p className="view-sub">Move the sliders. Watch what the gate <i>would</i> do — then ask the tuner to commit.</p>
         </div>
         <div className="spacer" />
         <button className="btn btn-ghost btn-sm" onClick={reset}>↺ reset sliders</button>
@@ -128,19 +161,16 @@ export default function Tuner({ seed, notify }) {
             format={(v) => v.toFixed(2)} hint="Ambiguous races go to the digest even if the winner is confident." />
           <div className="btn-row" style={{ marginTop: 16 }}>
             <button className="btn btn-amber" onClick={applyTune} disabled={applying}>
-              {applying ? 'Tuning…' : '🎛️ Apply tune (real tuner)'}
+              {applying ? 'Tuning…' : '🎛️ Apply tune (local tuner)'}
             </button>
           </div>
-          <div className="note" style={{ marginTop: 8 }}>Apply is wired to the real tuner endpoint — it will refuse honestly if it lacks the labels, and tell you why.</div>
+          <div className="note" style={{ marginTop: 8 }}>Apply runs the real tuner logic locally in this demo — no server, no keys, no email access. It will refuse honestly if it lacks the labels, and tell you why.</div>
         </div>
 
         <div className="panel">
           <h3 className="panel-title">🔮 Live what-if {previewing && <span className="note">(updating…)</span>}</h3>
           {preview?.error && <div className="note" style={{ color: 'var(--rose)' }}>Preview failed: {preview.error}</div>}
-          <div className="compare-row">
-            <CountBars before={preview?.before} after={preview?.before} title="before · current thresholds" />
-            <CountBars before={preview?.after} after={preview?.after} title="after · your sliders" />
-          </div>
+          <WhatIfTable before={preview?.before} after={preview?.after} />
           <div className="divider" />
           <div className="note">
             Live thresholds: <span className="mono">τ_cat {baseline.tau_cat} · τ_noise {baseline.tau_noise} · δ {baseline.delta}</span><br />

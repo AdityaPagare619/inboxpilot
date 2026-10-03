@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { Component, useCallback, useEffect, useState } from 'react';
 import './styles.css';
 import Dashboard from './views/Dashboard';
 import Digest from './views/Digest';
@@ -6,6 +6,41 @@ import Explorer from './views/Explorer';
 import Tuner from './views/Tuner';
 import Audit from './views/Audit';
 import CostPrivacy from './views/CostPrivacy';
+
+// A crashed view must never nuke the whole app (React unmounts the entire
+// tree on an uncaught render error). This boundary contains the blast radius
+// to the view router and offers a way back.
+class ViewErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { error };
+  }
+  componentDidCatch(error) {
+    // eslint-disable-next-line no-console
+    console.error('InboxPilot view crashed:', error);
+  }
+  render() {
+    if (this.state.error) {
+      return (
+        <div className="errbox" style={{ marginTop: 24 }}>
+          <div style={{ fontSize: 30, marginBottom: 8 }}>🧯</div>
+          <div style={{ fontWeight: 700, color: 'var(--txt)', marginBottom: 6 }}>This view hit a render bug</div>
+          <div className="note" style={{ marginBottom: 14 }}>
+            The app itself is fine — the crash was contained here. {String(this.state.error?.message || this.state.error)}
+          </div>
+          <div className="btn-row" style={{ justifyContent: 'center' }}>
+            <button className="btn btn-primary btn-sm" onClick={() => { this.setState({ error: null }); this.props.onReset?.(); }}>↩ Back to Triage</button>
+            <button className="btn btn-ghost btn-sm" onClick={() => window.location.reload()}>↻ Reload app</button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 const VIEWS = [
   { id: 'triage', label: 'Triage', icon: '📊' },
@@ -61,12 +96,14 @@ export default function App() {
       </nav>
 
       <main className="wrap">
-        {view === 'triage' && <Dashboard seed={seed} onRerun={bumpSeed} notify={notify} />}
-        {view === 'digest' && <Digest seed={seed} notify={notify} />}
-        {view === 'explorer' && <Explorer seed={seed} />}
-        {view === 'tuner' && <Tuner seed={seed} notify={notify} />}
-        {view === 'audit' && <Audit seed={seed} />}
-        {view === 'cost' && <CostPrivacy />}
+        <ViewErrorBoundary key={view} onReset={() => setView('triage')}>
+          {view === 'triage' && <Dashboard seed={seed} onRerun={bumpSeed} notify={notify} />}
+          {view === 'digest' && <Digest seed={seed} notify={notify} />}
+          {view === 'explorer' && <Explorer seed={seed} />}
+          {view === 'tuner' && <Tuner seed={seed} notify={notify} />}
+          {view === 'audit' && <Audit seed={seed} />}
+          {view === 'cost' && <CostPrivacy />}
+        </ViewErrorBoundary>
       </main>
 
       <div className="toasts">

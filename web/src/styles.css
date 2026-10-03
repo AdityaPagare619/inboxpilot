@@ -336,6 +336,11 @@ details > summary:hover { color: var(--txt); }
 }
 .compare-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 @media (max-width: 860px) { .compare-row { grid-template-columns: 1fr; } }
+.whatif-head, .whatif-row { display: grid; grid-template-columns: 1fr 64px 64px 56px; gap: 8px; align-items: center; padding: 6px 0; }
+.whatif-head { font-family: var(--mono); font-size: 10.5px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--txt-faint); border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+.whatif-head .num, .whatif-row .num { text-align: right; }
+.whatif-row { border-bottom: 1px dashed rgba(255,255,255,.06); }
+.whatif-row:last-child { border-bottom: none; }
 .vs-tag { font-family: var(--mono); font-size: 11px; letter-spacing: 1.5px; color: var(--txt-faint); text-transform: uppercase; margin-bottom: 8px; }
 .big-delta { font-family: var(--mono); font-size: 26px; font-weight: 800; }
 .delta-pos { color: var(--lime); } .delta-neg { color: var(--rose); } .delta-zero { color: var(--txt-dim); }
