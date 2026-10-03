@@ -58,3 +58,13 @@
 - Pages enable failed: HTTP 422 "Your current plan does not support GitHub Pages for this repository" (repo is private on a free plan).
 - STOPPED per Aditya's standing rules: did NOT flip repo visibility, did NOT try another host. Decision is Aditya's: (a) upgrade GitHub plan, or (b) make inboxpilot public → deploy completes in ~5 min.
 - Live-browser QA (Lane C) not run — no live URL exists; automated QA only (drift check + 58/58 shim assertions + local preview 200s, all green).
+
+## Round-2 QA fixes deployed (2026-10-03 ~21:05 IST)
+- Aditya chose "make the repo public" → repo flipped to public, Pages enabled, site live at https://adityapagare619.github.io/inboxpilot/
+- Round-1 re-verification passed all 8 fixes; 4 new issues found, all fixed in web/ (commit e9c6a3a):
+  1. [HIGH ship-blocker] "Re-run triage" bricked the app past seed 3 → re-run now cycles via nextSeed() through snapshot-derived seeds; api.resolveSeed() falls back to nearest available seed with a gentle notice (never hard-fails); persisted unknown seed resets to 0 on load; seed chip is clickable demo-reset.
+  2. [LOW] "Reset sliders" now restores FN cost too — all four controls init + reset from shared TUNER_DEFAULTS (fn_cost 100x = backend default; was a stray 400).
+  3. [LOW] Toast generic ✅ prefix removed; messages carry their own emoji (added ❌ to the one bare failure message).
+  4. [LOW] Seed tag hardened to a single template literal `seed=${seed}` — always renders "seed=3".
+- Regression suite: tools/test_api.mjs 72/72 green (14 new: seed wrap-around ×8 re-runs, unknown-seed fallback on inbox/explain/audit, tuner-reset tripwire); check_drift.mjs 0 failures; npm run build clean (base /inboxpilot/).
+- Deployed: gh-pages force-pushed (80c7eaa) with new assets index-ClGE9moa.js / index-Dt9QPCHK.css; live curl-verified serving the new hash.
