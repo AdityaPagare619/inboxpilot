@@ -68,3 +68,13 @@
   4. [LOW] Seed tag hardened to a single template literal `seed=${seed}` — always renders "seed=3".
 - Regression suite: tools/test_api.mjs 72/72 green (14 new: seed wrap-around ×8 re-runs, unknown-seed fallback on inbox/explain/audit, tuner-reset tripwire); check_drift.mjs 0 failures; npm run build clean (base /inboxpilot/).
 - Deployed: gh-pages force-pushed (80c7eaa) with new assets index-ClGE9moa.js / index-Dt9QPCHK.css; live curl-verified serving the new hash.
+
+## Live QA + hotfix log (2026-10-03 evening, Petu direct)
+- 19:36 — Aditya: full platform on GitHub (not Vercel) by 22:00 + interactive testing as user & A/B testers.
+- Repo made PUBLIC per Aditya's call (Pages needs paid plan for private repos; ₹0 rule excludes upgrade). Pages live: https://adityapagare619.github.io/inboxpilot/
+- QA round 1 (live browser, 3 passes): 8 bugs — 2 BLOCKERS (Explorer + Cost views crashed whole app: object-rendered-as-child / .map on object), 1 MAJOR (corrections lost on reload), 2 minor, 3 cosmetic. All fixed, redeployed, re-verified PASS.
+- QA round 2: 4 new — 1 HIGH (re-run triage bricked app on unknown seed 4, persisted, no recovery). Fixed: seed wrap-around modulo snapshot seeds, unknown-seed fallback with notice, clickable seed-chip reset. 3 minor fixed. 79/79 tests green.
+- QA round 3: round-2 redeploy FAILED TO BOOT (blank page). Root cause (Petu, headless-Chromium repro): App.jsx called api.getAvailableSeeds() but it's a standalone export, not on the api object — sync TypeError in useEffect unmounted the whole tree. Fixed call + added top-level ViewErrorBoundary. Verified render in real browser engine, redeployed.
+- QA round 4: 1 MEDIUM (reset-demo didn't clear digest handled queue). Fixed: api.resetAll() clears all persisted+in-memory state; seed chip reloads pristine. 79/79 green, clean dist-only gh-pages deploy.
+- FINAL QA 23:05: SHIP IT — boot stable, all 6 views, reset flow verified end-to-end, seed cycling, persistence. Known remaining: (1) cosmetic — handled list drops category badge after reload (data intact); (2) mobile 390px layout unverified (browser toolset lacks viewport control).
+- Deadline note: 22:00 slipped to ~23:10 — each QA round found real ship-blockers; chose to fix rather than ship broken.
