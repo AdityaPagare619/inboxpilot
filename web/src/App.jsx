@@ -1,6 +1,6 @@
 import { Component, useCallback, useEffect, useState } from 'react';
 import './styles.css';
-import { api, nextSeed } from './api';
+import { api, nextSeed, getAvailableSeeds } from './api';
 import Dashboard from './views/Dashboard';
 import Digest from './views/Digest';
 import Explorer from './views/Explorer';
@@ -11,7 +11,7 @@ import CostPrivacy from './views/CostPrivacy';
 // A crashed view must never nuke the whole app (React unmounts the entire
 // tree on an uncaught render error). This boundary contains the blast radius
 // to the view router and offers a way back.
-class ViewErrorBoundary extends Component {
+export class ViewErrorBoundary extends Component {
   constructor(props) {
     super(props);
     this.state = { error: null };
@@ -66,7 +66,7 @@ export default function App() {
   // in the snapshot — reset to 0 instead of bricking every view on load.
   useEffect(() => {
     let cancelled = false;
-    api.getAvailableSeeds().then((seeds) => {
+    getAvailableSeeds().then((seeds) => {
       if (!cancelled) setSeed((s) => (seeds.includes(s) ? s : 0));
     }).catch(() => {});
     return () => { cancelled = true; };
