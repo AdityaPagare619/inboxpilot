@@ -1,0 +1,1326 @@
+{
+ "seeds": {
+  "0": {
+   "counts": {
+    "total": 21,
+    "auto_label": 12,
+    "auto_archive": 1,
+    "digest": 8
+   },
+   "thresholds": {
+    "tau_cat": 0.85,
+    "tau_noise": 0.95,
+    "delta": 0.15,
+    "urgent_high": 0.75,
+    "urgent_low": 0.25,
+    "urgency_archive_max": 0.3
+   },
+   "decisions": {
+    "msg-025": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.95,
+     "urgency_p": 0.93,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.95 confidence, urgency 0.93 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-024": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.9,
+     "urgency_p": 0.88,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.90 confidence, urgency 0.88 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-023": {
+     "action": "digest",
+     "label": null,
+     "category": "needs_action",
+     "category_confidence": 0.88,
+     "urgency_p": 0.72,
+     "branch": "digest_urgent_uncertain",
+     "branch_rule_id": "digest_urgent_uncertain",
+     "reasons": [
+      "Urgency uncertain (0.72)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/Action"
+     }
+    },
+    "msg-022": {
+     "action": "digest",
+     "label": null,
+     "category": "noise",
+     "category_confidence": 0.97,
+     "urgency_p": 0.05,
+     "branch": "guardrail_contact_noise",
+     "branch_rule_id": "guardrail_contact_noise",
+     "reasons": [
+      "Classified as noise but the sender is in your contacts \u2014 contradiction, needs your call."
+     ],
+     "suggested": {
+      "action": "review",
+      "label": null
+     }
+    },
+    "msg-021": {
+     "action": "auto_label",
+     "label": "InboxPilot/Receipts",
+     "category": "receipt",
+     "category_confidence": 0.94,
+     "urgency_p": 0.05,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "receipt at 0.94 confidence, calm \u2192 InboxPilot/Receipts."
+     ],
+     "suggested": null
+    },
+    "msg-020": {
+     "action": "auto_label",
+     "label": "InboxPilot/Receipts",
+     "category": "receipt",
+     "category_confidence": 0.96,
+     "urgency_p": 0.08,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "receipt at 0.96 confidence, calm \u2192 InboxPilot/Receipts."
+     ],
+     "suggested": null
+    },
+    "msg-019": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.89,
+     "urgency_p": 0.78,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.89 confidence, urgency 0.78 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-018": {
+     "action": "digest",
+     "label": null,
+     "category": "needs_action",
+     "category_confidence": 0.91,
+     "urgency_p": 0.7,
+     "branch": "digest_urgent_uncertain",
+     "branch_rule_id": "digest_urgent_uncertain",
+     "reasons": [
+      "Urgency uncertain (0.70)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/Action"
+     }
+    },
+    "msg-017": {
+     "action": "digest",
+     "label": null,
+     "category": "needs_action",
+     "category_confidence": 0.86,
+     "urgency_p": 0.45,
+     "branch": "digest_urgent_uncertain",
+     "branch_rule_id": "digest_urgent_uncertain",
+     "reasons": [
+      "Urgency uncertain (0.45)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/Action"
+     }
+    },
+    "msg-015": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.9,
+     "urgency_p": 0.82,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.90 confidence, urgency 0.82 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-014": {
+     "action": "digest",
+     "label": null,
+     "category": "fyi",
+     "category_confidence": 0.88,
+     "urgency_p": 0.35,
+     "branch": "digest_urgent_uncertain",
+     "branch_rule_id": "digest_urgent_uncertain",
+     "reasons": [
+      "Urgency uncertain (0.35)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/FYI"
+     }
+    },
+    "msg-013": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.93,
+     "urgency_p": 0.85,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.93 confidence, urgency 0.85 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-011": {
+     "action": "auto_label",
+     "label": "InboxPilot/FYI",
+     "category": "fyi",
+     "category_confidence": 0.9,
+     "urgency_p": 0.15,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "fyi at 0.90 confidence, calm \u2192 InboxPilot/FYI."
+     ],
+     "suggested": null
+    },
+    "msg-010": {
+     "action": "auto_label",
+     "label": "InboxPilot/Newsletters",
+     "category": "newsletter",
+     "category_confidence": 0.98,
+     "urgency_p": 0.02,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "newsletter at 0.98 confidence, calm \u2192 InboxPilot/Newsletters."
+     ],
+     "suggested": null
+    },
+    "msg-009": {
+     "action": "auto_label",
+     "label": "InboxPilot/Newsletters",
+     "category": "newsletter",
+     "category_confidence": 0.95,
+     "urgency_p": 0.03,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "newsletter at 0.95 confidence, calm \u2192 InboxPilot/Newsletters."
+     ],
+     "suggested": null
+    },
+    "msg-008": {
+     "action": "digest",
+     "label": null,
+     "category": "noise",
+     "category_confidence": 0.93,
+     "urgency_p": 0.02,
+     "branch": "digest_noise_bar",
+     "branch_rule_id": "digest_noise_bar",
+     "reasons": [
+      "Probably noise (0.93) but below the auto-archive bar (0.95) \u2014 your call."
+     ],
+     "suggested": {
+      "action": "archive",
+      "label": null
+     }
+    },
+    "msg-007": {
+     "action": "auto_label",
+     "label": "InboxPilot/FYI",
+     "category": "fyi",
+     "category_confidence": 0.87,
+     "urgency_p": 0.2,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "fyi at 0.87 confidence, calm \u2192 InboxPilot/FYI."
+     ],
+     "suggested": null
+    },
+    "msg-006": {
+     "action": "auto_archive",
+     "label": null,
+     "category": "noise",
+     "category_confidence": 0.99,
+     "urgency_p": 0.01,
+     "branch": "auto_archive",
+     "branch_rule_id": "auto_archive",
+     "reasons": [
+      "Noise at 0.99 confidence (bar 0.95), urgency 0.01 \u2014 safe to archive."
+     ],
+     "suggested": null
+    },
+    "msg-005": {
+     "action": "digest",
+     "label": null,
+     "category": "noise",
+     "category_confidence": 0.88,
+     "urgency_p": 0.04,
+     "branch": "digest_noise_bar",
+     "branch_rule_id": "digest_noise_bar",
+     "reasons": [
+      "Probably noise (0.88) but below the auto-archive bar (0.95) \u2014 your call."
+     ],
+     "suggested": {
+      "action": "archive",
+      "label": null
+     }
+    },
+    "msg-003": {
+     "action": "auto_label",
+     "label": "InboxPilot/FYI",
+     "category": "fyi",
+     "category_confidence": 0.92,
+     "urgency_p": 0.05,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "fyi at 0.92 confidence, calm \u2192 InboxPilot/FYI."
+     ],
+     "suggested": null
+    },
+    "msg-001": {
+     "action": "digest",
+     "label": null,
+     "category": "needs_action",
+     "category_confidence": 0.6,
+     "urgency_p": 0.4,
+     "branch": "digest_low_conf",
+     "branch_rule_id": "digest_low_conf",
+     "reasons": [
+      "Category confidence 0.60 below the auto-label bar (0.85).",
+      "Top categories too close: needs_action (0.55) vs fyi (0.45) \u2014 ambiguous, not guessing.",
+      "Urgency uncertain (0.40)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/Action"
+     }
+    }
+   }
+  },
+  "1": {
+   "counts": {
+    "total": 21,
+    "auto_label": 12,
+    "auto_archive": 1,
+    "digest": 8
+   },
+   "thresholds": {
+    "tau_cat": 0.85,
+    "tau_noise": 0.95,
+    "delta": 0.15,
+    "urgent_high": 0.75,
+    "urgent_low": 0.25,
+    "urgency_archive_max": 0.3
+   },
+   "decisions": {
+    "msg-025": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.95,
+     "urgency_p": 0.9115063179939767,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.95 confidence, urgency 0.91 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-024": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.9,
+     "urgency_p": 0.8677789586055509,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.90 confidence, urgency 0.87 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-023": {
+     "action": "digest",
+     "label": null,
+     "category": "needs_action",
+     "category_confidence": 0.88,
+     "urgency_p": 0.7246239892171286,
+     "branch": "digest_urgent_uncertain",
+     "branch_rule_id": "digest_urgent_uncertain",
+     "reasons": [
+      "Urgency uncertain (0.72)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/Action"
+     }
+    },
+    "msg-022": {
+     "action": "digest",
+     "label": null,
+     "category": "noise",
+     "category_confidence": 0.97,
+     "urgency_p": 0.06999809982255056,
+     "branch": "guardrail_contact_noise",
+     "branch_rule_id": "guardrail_contact_noise",
+     "reasons": [
+      "Classified as noise but the sender is in your contacts \u2014 contradiction, needs your call."
+     ],
+     "suggested": {
+      "action": "review",
+      "label": null
+     }
+    },
+    "msg-021": {
+     "action": "auto_label",
+     "label": "InboxPilot/Receipts",
+     "category": "receipt",
+     "category_confidence": 0.94,
+     "urgency_p": 0.06165235148548437,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "receipt at 0.94 confidence, calm \u2192 InboxPilot/Receipts."
+     ],
+     "suggested": null
+    },
+    "msg-020": {
+     "action": "auto_label",
+     "label": "InboxPilot/Receipts",
+     "category": "receipt",
+     "category_confidence": 0.96,
+     "urgency_p": 0.09283122696746868,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "receipt at 0.96 confidence, calm \u2192 InboxPilot/Receipts."
+     ],
+     "suggested": null
+    },
+    "msg-019": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.89,
+     "urgency_p": 0.772205099773641,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.89 confidence, urgency 0.77 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-018": {
+     "action": "digest",
+     "label": null,
+     "category": "needs_action",
+     "category_confidence": 0.91,
+     "urgency_p": 0.7038578664473858,
+     "branch": "digest_urgent_uncertain",
+     "branch_rule_id": "digest_urgent_uncertain",
+     "reasons": [
+      "Urgency uncertain (0.70)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/Action"
+     }
+    },
+    "msg-017": {
+     "action": "digest",
+     "label": null,
+     "category": "needs_action",
+     "category_confidence": 0.86,
+     "urgency_p": 0.45494464289977793,
+     "branch": "digest_urgent_uncertain",
+     "branch_rule_id": "digest_urgent_uncertain",
+     "reasons": [
+      "Urgency uncertain (0.45)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/Action"
+     }
+    },
+    "msg-015": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.9,
+     "urgency_p": 0.8082351382468442,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.90 confidence, urgency 0.81 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-014": {
+     "action": "digest",
+     "label": null,
+     "category": "fyi",
+     "category_confidence": 0.88,
+     "urgency_p": 0.33864991598963967,
+     "branch": "digest_urgent_uncertain",
+     "branch_rule_id": "digest_urgent_uncertain",
+     "reasons": [
+      "Urgency uncertain (0.34)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/FYI"
+     }
+    },
+    "msg-013": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.93,
+     "urgency_p": 0.8680029373145669,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.93 confidence, urgency 0.87 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-011": {
+     "action": "auto_label",
+     "label": "InboxPilot/FYI",
+     "category": "fyi",
+     "category_confidence": 0.9,
+     "urgency_p": 0.1312725549101067,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "fyi at 0.90 confidence, calm \u2192 InboxPilot/FYI."
+     ],
+     "suggested": null
+    },
+    "msg-010": {
+     "action": "auto_label",
+     "label": "InboxPilot/Newsletters",
+     "category": "newsletter",
+     "category_confidence": 0.98,
+     "urgency_p": 0.026045478271796714,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "newsletter at 0.98 confidence, calm \u2192 InboxPilot/Newsletters."
+     ],
+     "suggested": null
+    },
+    "msg-009": {
+     "action": "auto_label",
+     "label": "InboxPilot/Newsletters",
+     "category": "newsletter",
+     "category_confidence": 0.95,
+     "urgency_p": 0.011160660190778004,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "newsletter at 0.95 confidence, calm \u2192 InboxPilot/Newsletters."
+     ],
+     "suggested": null
+    },
+    "msg-008": {
+     "action": "digest",
+     "label": null,
+     "category": "noise",
+     "category_confidence": 0.93,
+     "urgency_p": 0.01,
+     "branch": "digest_noise_bar",
+     "branch_rule_id": "digest_noise_bar",
+     "reasons": [
+      "Probably noise (0.93) but below the auto-archive bar (0.95) \u2014 your call."
+     ],
+     "suggested": {
+      "action": "archive",
+      "label": null
+     }
+    },
+    "msg-007": {
+     "action": "auto_label",
+     "label": "InboxPilot/FYI",
+     "category": "fyi",
+     "category_confidence": 0.87,
+     "urgency_p": 0.2079480106541766,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "fyi at 0.87 confidence, calm \u2192 InboxPilot/FYI."
+     ],
+     "suggested": null
+    },
+    "msg-006": {
+     "action": "auto_archive",
+     "label": null,
+     "category": "noise",
+     "category_confidence": 0.99,
+     "urgency_p": 0.013494594558955773,
+     "branch": "auto_archive",
+     "branch_rule_id": "auto_archive",
+     "reasons": [
+      "Noise at 0.99 confidence (bar 0.95), urgency 0.01 \u2014 safe to archive."
+     ],
+     "suggested": null
+    },
+    "msg-005": {
+     "action": "digest",
+     "label": null,
+     "category": "noise",
+     "category_confidence": 0.88,
+     "urgency_p": 0.046881172048598804,
+     "branch": "digest_noise_bar",
+     "branch_rule_id": "digest_noise_bar",
+     "reasons": [
+      "Probably noise (0.88) but below the auto-archive bar (0.95) \u2014 your call."
+     ],
+     "suggested": {
+      "action": "archive",
+      "label": null
+     }
+    },
+    "msg-003": {
+     "action": "auto_label",
+     "label": "InboxPilot/FYI",
+     "category": "fyi",
+     "category_confidence": 0.92,
+     "urgency_p": 0.05755485391885854,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "fyi at 0.92 confidence, calm \u2192 InboxPilot/FYI."
+     ],
+     "suggested": null
+    },
+    "msg-001": {
+     "action": "digest",
+     "label": null,
+     "category": "needs_action",
+     "category_confidence": 0.6,
+     "urgency_p": 0.3869233231448856,
+     "branch": "digest_low_conf",
+     "branch_rule_id": "digest_low_conf",
+     "reasons": [
+      "Category confidence 0.60 below the auto-label bar (0.85).",
+      "Top categories too close: needs_action (0.53) vs fyi (0.46) \u2014 ambiguous, not guessing.",
+      "Urgency uncertain (0.39)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/Action"
+     }
+    }
+   }
+  },
+  "2": {
+   "counts": {
+    "total": 21,
+    "auto_label": 12,
+    "auto_archive": 1,
+    "digest": 8
+   },
+   "thresholds": {
+    "tau_cat": 0.85,
+    "tau_noise": 0.95,
+    "delta": 0.15,
+    "urgent_high": 0.75,
+    "urgent_low": 0.25,
+    "urgency_archive_max": 0.3
+   },
+   "decisions": {
+    "msg-025": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.95,
+     "urgency_p": 0.9286782333018907,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.95 confidence, urgency 0.93 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-024": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.9,
+     "urgency_p": 0.8900463125924688,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.90 confidence, urgency 0.89 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-023": {
+     "action": "digest",
+     "label": null,
+     "category": "needs_action",
+     "category_confidence": 0.88,
+     "urgency_p": 0.7150782227644413,
+     "branch": "digest_urgent_uncertain",
+     "branch_rule_id": "digest_urgent_uncertain",
+     "reasons": [
+      "Urgency uncertain (0.72)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/Action"
+     }
+    },
+    "msg-022": {
+     "action": "digest",
+     "label": null,
+     "category": "noise",
+     "category_confidence": 0.97,
+     "urgency_p": 0.04906886247430669,
+     "branch": "guardrail_contact_noise",
+     "branch_rule_id": "guardrail_contact_noise",
+     "reasons": [
+      "Classified as noise but the sender is in your contacts \u2014 contradiction, needs your call."
+     ],
+     "suggested": {
+      "action": "review",
+      "label": null
+     }
+    },
+    "msg-021": {
+     "action": "auto_label",
+     "label": "InboxPilot/Receipts",
+     "category": "receipt",
+     "category_confidence": 0.94,
+     "urgency_p": 0.05048606235079609,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "receipt at 0.94 confidence, calm \u2192 InboxPilot/Receipts."
+     ],
+     "suggested": null
+    },
+    "msg-020": {
+     "action": "auto_label",
+     "label": "InboxPilot/Receipts",
+     "category": "receipt",
+     "category_confidence": 0.96,
+     "urgency_p": 0.0941601738599502,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "receipt at 0.96 confidence, calm \u2192 InboxPilot/Receipts."
+     ],
+     "suggested": null
+    },
+    "msg-019": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.89,
+     "urgency_p": 0.7820010891235436,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.89 confidence, urgency 0.78 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-018": {
+     "action": "digest",
+     "label": null,
+     "category": "needs_action",
+     "category_confidence": 0.91,
+     "urgency_p": 0.711702143259277,
+     "branch": "digest_urgent_uncertain",
+     "branch_rule_id": "digest_urgent_uncertain",
+     "reasons": [
+      "Urgency uncertain (0.71)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/Action"
+     }
+    },
+    "msg-017": {
+     "action": "digest",
+     "label": null,
+     "category": "needs_action",
+     "category_confidence": 0.86,
+     "urgency_p": 0.46126456900296375,
+     "branch": "digest_urgent_uncertain",
+     "branch_rule_id": "digest_urgent_uncertain",
+     "reasons": [
+      "Urgency uncertain (0.46)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/Action"
+     }
+    },
+    "msg-015": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.9,
+     "urgency_p": 0.8032518570318938,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.90 confidence, urgency 0.80 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-014": {
+     "action": "digest",
+     "label": null,
+     "category": "fyi",
+     "category_confidence": 0.88,
+     "urgency_p": 0.345479804728059,
+     "branch": "digest_urgent_uncertain",
+     "branch_rule_id": "digest_urgent_uncertain",
+     "reasons": [
+      "Urgency uncertain (0.35)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/FYI"
+     }
+    },
+    "msg-013": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.93,
+     "urgency_p": 0.867753975763394,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.93 confidence, urgency 0.87 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-011": {
+     "action": "auto_label",
+     "label": "InboxPilot/FYI",
+     "category": "fyi",
+     "category_confidence": 0.9,
+     "urgency_p": 0.15462516040183258,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "fyi at 0.90 confidence, calm \u2192 InboxPilot/FYI."
+     ],
+     "suggested": null
+    },
+    "msg-010": {
+     "action": "auto_label",
+     "label": "InboxPilot/Newsletters",
+     "category": "newsletter",
+     "category_confidence": 0.98,
+     "urgency_p": 0.01,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "newsletter at 0.98 confidence, calm \u2192 InboxPilot/Newsletters."
+     ],
+     "suggested": null
+    },
+    "msg-009": {
+     "action": "auto_label",
+     "label": "InboxPilot/Newsletters",
+     "category": "newsletter",
+     "category_confidence": 0.95,
+     "urgency_p": 0.025413663260502196,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "newsletter at 0.95 confidence, calm \u2192 InboxPilot/Newsletters."
+     ],
+     "suggested": null
+    },
+    "msg-008": {
+     "action": "digest",
+     "label": null,
+     "category": "noise",
+     "category_confidence": 0.93,
+     "urgency_p": 0.01355792965124313,
+     "branch": "digest_noise_bar",
+     "branch_rule_id": "digest_noise_bar",
+     "reasons": [
+      "Probably noise (0.93) but below the auto-archive bar (0.95) \u2014 your call."
+     ],
+     "suggested": {
+      "action": "archive",
+      "label": null
+     }
+    },
+    "msg-007": {
+     "action": "auto_label",
+     "label": "InboxPilot/FYI",
+     "category": "fyi",
+     "category_confidence": 0.87,
+     "urgency_p": 0.21699185714986918,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "fyi at 0.87 confidence, calm \u2192 InboxPilot/FYI."
+     ],
+     "suggested": null
+    },
+    "msg-006": {
+     "action": "auto_archive",
+     "label": null,
+     "category": "noise",
+     "category_confidence": 0.99,
+     "urgency_p": 0.02246435637410366,
+     "branch": "auto_archive",
+     "branch_rule_id": "auto_archive",
+     "reasons": [
+      "Noise at 0.99 confidence (bar 0.95), urgency 0.02 \u2014 safe to archive."
+     ],
+     "suggested": null
+    },
+    "msg-005": {
+     "action": "digest",
+     "label": null,
+     "category": "noise",
+     "category_confidence": 0.88,
+     "urgency_p": 0.030710762303953705,
+     "branch": "digest_noise_bar",
+     "branch_rule_id": "digest_noise_bar",
+     "reasons": [
+      "Probably noise (0.88) but below the auto-archive bar (0.95) \u2014 your call."
+     ],
+     "suggested": {
+      "action": "archive",
+      "label": null
+     }
+    },
+    "msg-003": {
+     "action": "auto_label",
+     "label": "InboxPilot/FYI",
+     "category": "fyi",
+     "category_confidence": 0.92,
+     "urgency_p": 0.05663911970952505,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "fyi at 0.92 confidence, calm \u2192 InboxPilot/FYI."
+     ],
+     "suggested": null
+    },
+    "msg-001": {
+     "action": "digest",
+     "label": null,
+     "category": "needs_action",
+     "category_confidence": 0.6,
+     "urgency_p": 0.3877029501292163,
+     "branch": "digest_low_conf",
+     "branch_rule_id": "digest_low_conf",
+     "reasons": [
+      "Category confidence 0.60 below the auto-label bar (0.85).",
+      "Top categories too close: needs_action (0.54) vs fyi (0.42) \u2014 ambiguous, not guessing.",
+      "Urgency uncertain (0.39)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/Action"
+     }
+    }
+   }
+  },
+  "3": {
+   "counts": {
+    "total": 21,
+    "auto_label": 12,
+    "auto_archive": 1,
+    "digest": 8
+   },
+   "thresholds": {
+    "tau_cat": 0.85,
+    "tau_noise": 0.95,
+    "delta": 0.15,
+    "urgent_high": 0.75,
+    "urgent_low": 0.25,
+    "urgency_archive_max": 0.3
+   },
+   "decisions": {
+    "msg-025": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.95,
+     "urgency_p": 0.9401619821670842,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.95 confidence, urgency 0.94 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-024": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.9,
+     "urgency_p": 0.8713207990609391,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.90 confidence, urgency 0.87 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-023": {
+     "action": "digest",
+     "label": null,
+     "category": "needs_action",
+     "category_confidence": 0.88,
+     "urgency_p": 0.7081688650250828,
+     "branch": "digest_urgent_uncertain",
+     "branch_rule_id": "digest_urgent_uncertain",
+     "reasons": [
+      "Urgency uncertain (0.71)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/Action"
+     }
+    },
+    "msg-022": {
+     "action": "digest",
+     "label": null,
+     "category": "noise",
+     "category_confidence": 0.97,
+     "urgency_p": 0.0465722536799899,
+     "branch": "guardrail_contact_noise",
+     "branch_rule_id": "guardrail_contact_noise",
+     "reasons": [
+      "Classified as noise but the sender is in your contacts \u2014 contradiction, needs your call."
+     ],
+     "suggested": {
+      "action": "review",
+      "label": null
+     }
+    },
+    "msg-021": {
+     "action": "auto_label",
+     "label": "InboxPilot/Receipts",
+     "category": "receipt",
+     "category_confidence": 0.94,
+     "urgency_p": 0.04779880428169826,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "receipt at 0.94 confidence, calm \u2192 InboxPilot/Receipts."
+     ],
+     "suggested": null
+    },
+    "msg-020": {
+     "action": "auto_label",
+     "label": "InboxPilot/Receipts",
+     "category": "receipt",
+     "category_confidence": 0.96,
+     "urgency_p": 0.07397404201654113,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "receipt at 0.96 confidence, calm \u2192 InboxPilot/Receipts."
+     ],
+     "suggested": null
+    },
+    "msg-019": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.89,
+     "urgency_p": 0.78102605448594,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.89 confidence, urgency 0.78 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-018": {
+     "action": "digest",
+     "label": null,
+     "category": "needs_action",
+     "category_confidence": 0.91,
+     "urgency_p": 0.7191654554566288,
+     "branch": "digest_urgent_uncertain",
+     "branch_rule_id": "digest_urgent_uncertain",
+     "reasons": [
+      "Urgency uncertain (0.72)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/Action"
+     }
+    },
+    "msg-017": {
+     "action": "digest",
+     "label": null,
+     "category": "needs_action",
+     "category_confidence": 0.86,
+     "urgency_p": 0.448560412483886,
+     "branch": "digest_urgent_uncertain",
+     "branch_rule_id": "digest_urgent_uncertain",
+     "reasons": [
+      "Urgency uncertain (0.45)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/Action"
+     }
+    },
+    "msg-015": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.9,
+     "urgency_p": 0.8021299660397064,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.90 confidence, urgency 0.80 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-014": {
+     "action": "digest",
+     "label": null,
+     "category": "fyi",
+     "category_confidence": 0.88,
+     "urgency_p": 0.3397364255156685,
+     "branch": "digest_urgent_uncertain",
+     "branch_rule_id": "digest_urgent_uncertain",
+     "reasons": [
+      "Urgency uncertain (0.34)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/FYI"
+     }
+    },
+    "msg-013": {
+     "action": "auto_label",
+     "label": "InboxPilot/P0",
+     "category": "needs_action",
+     "category_confidence": 0.93,
+     "urgency_p": 0.8609160515644858,
+     "branch": "auto_label_p0",
+     "branch_rule_id": "auto_label_p0",
+     "reasons": [
+      "needs_action at 0.93 confidence, urgency 0.86 \u2192 InboxPilot/P0."
+     ],
+     "suggested": null
+    },
+    "msg-011": {
+     "action": "auto_label",
+     "label": "InboxPilot/FYI",
+     "category": "fyi",
+     "category_confidence": 0.9,
+     "urgency_p": 0.1560003170710989,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "fyi at 0.90 confidence, calm \u2192 InboxPilot/FYI."
+     ],
+     "suggested": null
+    },
+    "msg-010": {
+     "action": "auto_label",
+     "label": "InboxPilot/Newsletters",
+     "category": "newsletter",
+     "category_confidence": 0.98,
+     "urgency_p": 0.01610313858280497,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "newsletter at 0.98 confidence, calm \u2192 InboxPilot/Newsletters."
+     ],
+     "suggested": null
+    },
+    "msg-009": {
+     "action": "auto_label",
+     "label": "InboxPilot/Newsletters",
+     "category": "newsletter",
+     "category_confidence": 0.95,
+     "urgency_p": 0.0353526820022037,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "newsletter at 0.95 confidence, calm \u2192 InboxPilot/Newsletters."
+     ],
+     "suggested": null
+    },
+    "msg-008": {
+     "action": "digest",
+     "label": null,
+     "category": "noise",
+     "category_confidence": 0.93,
+     "urgency_p": 0.03912605850005663,
+     "branch": "digest_noise_bar",
+     "branch_rule_id": "digest_noise_bar",
+     "reasons": [
+      "Probably noise (0.93) but below the auto-archive bar (0.95) \u2014 your call."
+     ],
+     "suggested": {
+      "action": "archive",
+      "label": null
+     }
+    },
+    "msg-007": {
+     "action": "auto_label",
+     "label": "InboxPilot/FYI",
+     "category": "fyi",
+     "category_confidence": 0.87,
+     "urgency_p": 0.1865479875464337,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "fyi at 0.87 confidence, calm \u2192 InboxPilot/FYI."
+     ],
+     "suggested": null
+    },
+    "msg-006": {
+     "action": "auto_archive",
+     "label": null,
+     "category": "noise",
+     "category_confidence": 0.99,
+     "urgency_p": 0.01,
+     "branch": "auto_archive",
+     "branch_rule_id": "auto_archive",
+     "reasons": [
+      "Noise at 0.99 confidence (bar 0.95), urgency 0.01 \u2014 safe to archive."
+     ],
+     "suggested": null
+    },
+    "msg-005": {
+     "action": "digest",
+     "label": null,
+     "category": "noise",
+     "category_confidence": 0.88,
+     "urgency_p": 0.05113788766580119,
+     "branch": "digest_noise_bar",
+     "branch_rule_id": "digest_noise_bar",
+     "reasons": [
+      "Probably noise (0.88) but below the auto-archive bar (0.95) \u2014 your call."
+     ],
+     "suggested": {
+      "action": "archive",
+      "label": null
+     }
+    },
+    "msg-003": {
+     "action": "auto_label",
+     "label": "InboxPilot/FYI",
+     "category": "fyi",
+     "category_confidence": 0.92,
+     "urgency_p": 0.039899236385221415,
+     "branch": "auto_label",
+     "branch_rule_id": "auto_label",
+     "reasons": [
+      "fyi at 0.92 confidence, calm \u2192 InboxPilot/FYI."
+     ],
+     "suggested": null
+    },
+    "msg-001": {
+     "action": "digest",
+     "label": null,
+     "category": "needs_action",
+     "category_confidence": 0.6,
+     "urgency_p": 0.4172756248519932,
+     "branch": "digest_low_conf",
+     "branch_rule_id": "digest_low_conf",
+     "reasons": [
+      "Category confidence 0.60 below the auto-label bar (0.85).",
+      "Top categories too close: needs_action (0.52) vs fyi (0.45) \u2014 ambiguous, not guessing.",
+      "Urgency uncertain (0.42)."
+     ],
+     "suggested": {
+      "action": "label",
+      "label": "InboxPilot/Action"
+     }
+    }
+   }
+  }
+ },
+ "whatif": {
+  "counts": {
+   "total": 21,
+   "auto_label": 12,
+   "auto_archive": 2,
+   "digest": 7
+  }
+ },
+ "status": {
+  "3": {
+   "n_labels": 3,
+   "status": "refuse",
+   "message": "3/10 corrections \u2014 tuner holds conservative defaults."
+  },
+  "12": {
+   "n_labels": 12,
+   "status": "provisional",
+   "message": "12/50 corrections \u2014 any tune would be PROVISIONAL."
+  },
+  "60": {
+   "n_labels": 60,
+   "status": "stable",
+   "message": "60 corrections \u2014 stable enough to tune."
+  }
+ },
+ "tune": {
+  "rows_n": 8,
+  "report": {
+   "n_labels": 8,
+   "before": {
+    "tau_cat": 0.85,
+    "tau_noise": 0.95,
+    "delta": 0.15,
+    "urgent_high": 0.75,
+    "urgent_low": 0.25,
+    "urgency_archive_max": 0.3
+   },
+   "after": {
+    "tau_cat": 0.85,
+    "tau_noise": 0.95,
+    "delta": 0.15,
+    "urgent_high": 0.75,
+    "urgent_low": 0.25,
+    "urgency_archive_max": 0.3
+   },
+   "utility_before": -0.7999999999999999,
+   "utility_after": 0.0,
+   "applied": false,
+   "provisional": false,
+   "notes": [
+    "Only 8 corrections \u2014 need at least 10 before tuning. Thresholds unchanged (conservative defaults hold)."
+   ]
+  }
+ }
+}
