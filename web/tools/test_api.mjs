@@ -165,4 +165,24 @@ for (const seed of [0, 1, 2, 3]) {
   ok(JSON.stringify(useStates) === JSON.stringify(['delta', 'fn_cost', 'tau_cat', 'tau_noise']), 'tuner defaults: all four controls init from TUNER_DEFAULTS');
 }
 
+// 10. regression: full demo reset clears every persisted trace (round-3)
+{
+  await api.resetAll(); // clean slate: earlier blocks leave tuned thresholds + corrections
+  const before = await api.inbox(0);
+  const target = before.emails.find((e) => e.decision.action === 'digest');
+  ok(!!target, 'reset: found a digest mail to handle');
+  await api.correct({ id: target.id, category: 'fyi', urgent: false, seed: 0 });
+  await api.markHandled(target.id, 'corrected');
+  const mid = await api.inbox(0);
+  ok(mid.digest_pending === before.digest_pending - 1, 'reset: handling reduces the digest queue');
+  ok(mem['inboxpilot:handled'] && mem['inboxpilot:corrections'], 'reset: handled + corrections persisted');
+  const r = await api.resetAll();
+  ok(r && r.ok === true, 'reset: resetAll reports ok');
+  ok(!mem['inboxpilot:handled'] && !mem['inboxpilot:corrections'] && !mem['inboxpilot:tune_events'] && !mem['inboxpilot:seed'], 'reset: all demo localStorage keys cleared');
+  const after = await api.inbox(0);
+  ok(after.digest_pending === before.digest_pending, 'reset: digest queue fully restored after resetAll');
+  const auditAfter = await api.audit(0);
+  ok(!auditAfter.entries.some((e) => e.kind === 'correction'), 'reset: no correction entries survive in the audit timeline');
+}
+
 console.log(process.exitCode ? 'API SHIM TESTS: FAILURES' : `API SHIM TESTS: all ${n} assertions passed`);

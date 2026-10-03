@@ -83,8 +83,22 @@ export default function App() {
   const bumpSeed = useCallback(() => setSeed((s) => nextSeed(s)), []);
 
   const resetDemo = useCallback(() => {
-    setSeed(0);
-    notify({ type: 'info', msg: '↺ Demo reset — back to seed 0.' });
+    // Clear every persisted + in-memory trace, then reload so all views
+    // re-read pristine state. A toast flag survives the reload.
+    api.resetAll().catch(() => {}).finally(() => {
+      try { sessionStorage.setItem('inboxpilot:reset-toast', '1'); } catch { /* ignore */ }
+      window.location.reload();
+    });
+  }, []);
+
+  // Post-reload toast for the demo reset above.
+  useEffect(() => {
+    let flag = false;
+    try {
+      flag = sessionStorage.getItem('inboxpilot:reset-toast') === '1';
+      sessionStorage.removeItem('inboxpilot:reset-toast');
+    } catch { /* ignore */ }
+    if (flag) notify({ type: 'info', msg: '↺ Demo reset — fresh seed 0, queue restored.' });
   }, [notify]);
 
   return (
@@ -101,8 +115,8 @@ export default function App() {
         <button
           className="seed-chip"
           onClick={resetDemo}
-          title="Reset the demo to seed 0"
-          aria-label="Reset demo to seed 0"
+          title="Reset the demo — clears corrections, queue, tuner, back to seed 0"
+          aria-label="Reset demo — clears corrections, queue, tuner, back to seed 0"
         >
           <span className="seed-dot" />
           seed <b>{seed}</b><span className="seed-reset-hint">↺</span>

@@ -305,6 +305,24 @@ export const api = {
       demo_caveats: snap.demo_caveats,
     };
   },
+
+  // Full demo reset: clears corrections, tune events, handled queue,
+  // threshold overrides, and the persisted seed — from memory AND
+  // localStorage — so the demo truly starts over. The UI reloads after.
+  resetAll: async () => {
+    _state.corrections = {};
+    _state.tuneEvents = [];
+    _state.thresholds = null;
+    _state.handled = {};
+    try {
+      localStorage.removeItem(LS_CORRECTIONS);
+      localStorage.removeItem(LS_TUNE_EVENTS);
+      localStorage.removeItem(LS_THRESHOLDS);
+      localStorage.removeItem(LS_HANDLED);
+      localStorage.removeItem('inboxpilot:seed');
+    } catch { /* private mode etc. — ignore */ }
+    return { ok: true };
+  },
 };
 
 export const CATEGORY_COLORS = {
