@@ -25,7 +25,9 @@ const src = readFileSync(new URL('../src/api.js', import.meta.url), 'utf8')
   .replace("from './static/triage.js'", "from '../src/static/triage.js'");
 const tmp = new URL('./_api_test_copy.mjs', import.meta.url);
 writeFileSync(tmp, src);
-const { api } = await import(tmp.href);
+const testMod = await import(tmp.href);
+const { api } = testMod;
+const { nextSeed, TUNER_DEFAULTS, getAvailableSeeds } = testMod;
 
 let n = 0;
 const ok = (cond, name) => { n++; if (!cond) { console.log('FAIL:', name); process.exitCode = 1; } };
@@ -128,6 +130,39 @@ for (const seed of [0, 1, 2, 3]) {
     return o && (o.decision.action !== e.decision.action || Math.abs(o.decision.urgency_p - e.decision.urgency_p) > 1e-12);
   }).length;
   ok(diff > 0, `seed flip: ${diff} mails differ between seed 0 and 1`);
+}
+
+// 9. regression: seed safety (round-2 ship-blocker) + tuner reset restores FN cost
+{
+  const seeds = await getAvailableSeeds();
+  ok(JSON.stringify(seeds) === JSON.stringify([0, 1, 2, 3]), 'seed safety: available seeds derived from snapshot');
+  // wrap-around: 8 consecutive re-runs cycle forever, never past the end
+  let s = 0;
+  const seq = [];
+  for (let i = 0; i < 8; i++) { s = nextSeed(s); seq.push(s); }
+  ok(JSON.stringify(seq) === JSON.stringify([1, 2, 3, 0, 1, 2, 3, 0]), `seed safety: 8 re-runs cycle ${seq.join('→')}`);
+  ok(nextSeed(99) === 0, 'seed safety: unknown seed wraps to first available');
+  // unknown-seed fallback: gentle notice, never a dead app
+  const d4 = await api.inbox(4);
+  ok(d4.seed === 3 && typeof d4.seed_notice === 'string' && d4.seed_notice.includes('seed 4'), 'seed safety: inbox(4) falls back to seed 3 with notice');
+  ok(d4.emails.length === 21, 'seed safety: inbox(4) still serves mail');
+  const d99 = await api.inbox(99);
+  ok(d99.seed === 3 && d99.seed_notice, 'seed safety: inbox(99) falls back with notice');
+  const id = d4.emails[0].id;
+  const x = await api.explain(id, 5);
+  ok(x.decision && x.seed_notice, 'seed safety: explain(id, 5) falls back with notice');
+  const a = await api.audit(7);
+  ok(a.entries.length > 0 && a.seed_notice, 'seed safety: audit(7) falls back with notice');
+  // tuner defaults: single canonical source, fn_cost matches the backend default
+  ok(TUNER_DEFAULTS.fn_cost === 100, 'tuner defaults: fn_cost is the backend default 100x');
+  // reset tripwire: the reset handler must restore EVERY tuner control
+  const tunerSrc = readFileSync(new URL('../src/views/Tuner.jsx', import.meta.url), 'utf8');
+  const resetBody = (tunerSrc.match(/const reset = \(\) => \{([\s\S]*?)\};/) || [])[1] || '';
+  for (const [setter, key] of [['setTauCat', 'tau_cat'], ['setTauNoise', 'tau_noise'], ['setDelta', 'delta'], ['setFnCost', 'fn_cost']]) {
+    ok(new RegExp(setter + '\\(TUNER_DEFAULTS\\.' + key + '\\)').test(resetBody), `tuner reset restores ${key}`);
+  }
+  const useStates = [...tunerSrc.matchAll(/useState\(TUNER_DEFAULTS\.(\w+)\)/g)].map((m) => m[1]).sort();
+  ok(JSON.stringify(useStates) === JSON.stringify(['delta', 'fn_cost', 'tau_cat', 'tau_noise']), 'tuner defaults: all four controls init from TUNER_DEFAULTS');
 }
 
 console.log(process.exitCode ? 'API SHIM TESTS: FAILURES' : `API SHIM TESTS: all ${n} assertions passed`);

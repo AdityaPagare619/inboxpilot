@@ -1,5 +1,6 @@
 import { Component, useCallback, useEffect, useState } from 'react';
 import './styles.css';
+import { api, nextSeed } from './api';
 import Dashboard from './views/Dashboard';
 import Digest from './views/Digest';
 import Explorer from './views/Explorer';
@@ -61,6 +62,16 @@ export default function App() {
 
   useEffect(() => { localStorage.setItem('inboxpilot:seed', String(seed)); }, [seed]);
 
+  // Recovery path: a persisted seed from a bricked/older session may not exist
+  // in the snapshot — reset to 0 instead of bricking every view on load.
+  useEffect(() => {
+    let cancelled = false;
+    api.getAvailableSeeds().then((seeds) => {
+      if (!cancelled) setSeed((s) => (seeds.includes(s) ? s : 0));
+    }).catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
+
   const notify = useCallback((t) => {
     const id = Math.random().toString(36).slice(2);
     const toast = { id, type: t.type || 'info', msg: t.msg };
@@ -68,7 +79,13 @@ export default function App() {
     setTimeout(() => setToasts((ts) => ts.filter((x) => x.id !== id)), 5200);
   }, []);
 
-  const bumpSeed = useCallback(() => setSeed((s) => s + 1), []);
+  // Re-run cycles through the snapshot's available seeds — never past the end.
+  const bumpSeed = useCallback(() => setSeed((s) => nextSeed(s)), []);
+
+  const resetDemo = useCallback(() => {
+    setSeed(0);
+    notify({ type: 'info', msg: '↺ Demo reset — back to seed 0.' });
+  }, [notify]);
 
   return (
     <div>
@@ -81,10 +98,15 @@ export default function App() {
           </div>
         </div>
         <span className="demo-badge">DEMO</span>
-        <div className="seed-chip" title="Jev's 1–2% non-determinism is simulated per seed">
+        <button
+          className="seed-chip"
+          onClick={resetDemo}
+          title="Reset the demo to seed 0"
+          aria-label="Reset demo to seed 0"
+        >
           <span className="seed-dot" />
-          seed <b>{seed}</b>
-        </div>
+          seed <b>{seed}</b><span className="seed-reset-hint">↺</span>
+        </button>
       </header>
 
       <nav className="nav">
@@ -109,7 +131,6 @@ export default function App() {
       <div className="toasts">
         {toasts.map((t) => (
           <div key={t.id} className={`toast ${t.type}`}>
-            <span>{t.type === 'ok' ? '✅' : t.type === 'warn' ? '⚠️' : t.type === 'bad' ? '❌' : 'ℹ️'}</span>
             <span>{t.msg}</span>
           </div>
         ))}

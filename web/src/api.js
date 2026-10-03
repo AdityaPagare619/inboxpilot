@@ -26,6 +26,48 @@ const LS_TUNE_EVENTS = 'inboxpilot:tune_events';
 const LS_HANDLED = 'inboxpilot:handled';
 
 let _snapshot = null;
+
+// ---- seed safety -----------------------------------------------------------
+// The snapshot only ships a fixed set of seeds ({0,1,2,3} today). The re-run
+// button, a stale localStorage value, or a hand-edited seed must never brick
+// the app: resolveSeed() maps ANY input to the nearest available seed and
+// reports the fallback, and nextSeed() cycles the re-run button through the
+// available seeds (derived from the snapshot — never hardcoded).
+let _seedsCache = null;
+
+function availableSeeds(snap) {
+  return Object.keys(snap.seeds || {}).map(Number).filter(Number.isFinite).sort((a, b) => a - b);
+}
+
+function resolveSeed(snap, seed) {
+  const seeds = availableSeeds(snap);
+  const n = Number(seed);
+  if (seeds.includes(n)) return { seed: n, notice: null };
+  const target = Number.isFinite(n) ? n : 0;
+  let best = seeds[0], bd = Infinity;
+  for (const s of seeds) {
+    const d = Math.abs(s - target);
+    if (d < bd) { bd = d; best = s; }
+  }
+  return { seed: best, notice: `seed ${seed} isn't in this demo snapshot — showing nearest available seed ${best}.` };
+}
+
+export function nextSeed(current) {
+  if (_seedsCache && _seedsCache.length) {
+    const i = _seedsCache.indexOf(Number(current));
+    return _seedsCache[(i + 1) % _seedsCache.length]; // unknown current -> indexOf -1 -> wraps to seeds[0]
+  }
+  return Number(current) + 1; // snapshot not loaded yet; resolveSeed() guards the API side
+}
+
+export async function getAvailableSeeds() {
+  const snap = await snapshot();
+  return availableSeeds(snap);
+}
+
+// Canonical tuner defaults, shared by the Tuner UI and the regression suite.
+// fn_cost 100x matches the API/backend default (api/tune.py, demo_store.py).
+export const TUNER_DEFAULTS = { tau_cat: 0.85, tau_noise: 0.95, delta: 0.15, fn_cost: 100 };
 const _state = {
   corrections: {},   // email_id -> {category, urgent}  (persisted)
   tuneEvents: [],    // {n, after}                       (persisted)
@@ -59,6 +101,7 @@ async function snapshot() {
   const r = await fetch(SNAP_URL);
   if (!r.ok) throw new Error(`snapshot ${r.status} — rebuild with web/tools/build_snapshot.py`);
   _snapshot = await r.json();
+  _seedsCache = availableSeeds(_snapshot);
   // restore session state from localStorage (corrections, tunes, handled, thresholds)
   rehydrateState();
   return _snapshot;
@@ -102,6 +145,8 @@ function labeledCases(snap, seed) {
 export const api = {
   inbox: async (seed) => {
     const snap = await snapshot();
+    const rsl = resolveSeed(snap, seed);
+    seed = rsl.seed;
     const t = getThresholds(snap);
     const { emails, counts } = triageAll(snap, seed, t);
     const handled = { ..._state.handled };
@@ -109,6 +154,7 @@ export const api = {
     return {
       mode: 'demo',
       seed,
+      seed_notice: rsl.notice,
       counts,
       thresholds: t,
       emails,
@@ -122,6 +168,8 @@ export const api = {
 
   explain: async (id, seed) => {
     const snap = await snapshot();
+    const rsl = resolveSeed(snap, seed);
+    seed = rsl.seed;
     const s = snap.seeds[String(seed)];
     if (!s) throw new Error(`unknown seed ${seed}`);
     const email = s.emails.find((e) => e.id === id);
@@ -132,6 +180,7 @@ export const api = {
     return {
       email: emailOnly,
       decision,
+      seed_notice: rsl.notice,
       answers: s.answers[id] || null,
       questions: snap.questions,
       thresholds: getThresholds(snap),
@@ -141,7 +190,7 @@ export const api = {
   },
 
   correct: async (payload) => {
-    const { id, category, urgent = null, seed = 0 } = payload || {};
+    const { id, category, urgent = null, seed: reqSeed = 0 } = payload || {};
     if (!id || !CATEGORIES.includes(category)) {
       throw new Error('bad input');
     }
@@ -149,6 +198,8 @@ export const api = {
       throw new Error("bad input: 'urgent' must be true, false, or null");
     }
     const snap = await snapshot();
+    const rsl = resolveSeed(snap, reqSeed);
+    const seed = rsl.seed;
     const s = snap.seeds[String(seed)];
     if (!s || !s.answers[id]) throw new Error(`unknown email id ${JSON.stringify(id)}`);
 
@@ -162,6 +213,7 @@ export const api = {
     return {
       ok: true,
       email_id: id,
+      seed_notice: rsl.notice,
       correction: { category, urgent: urgent ?? null },
       retriage: match ? match.decision : null,
       counts: countsFor(snap, seed, t),
@@ -170,8 +222,10 @@ export const api = {
   },
 
   tune: async (payload) => {
-    const { seed = 0, fn_cost = 100, preview = null, thresholds = null, apply = true } = payload || {};
+    let { seed = 0, fn_cost = 100, preview = null, thresholds = null, apply = true } = payload || {};
     const snap = await snapshot();
+    const rsl = resolveSeed(snap, seed);
+    seed = rsl.seed;
     const t = getThresholds(snap);
     const cost = Math.min(1000, Math.max(100, Number(fn_cost) || 100));
     const cases = labeledCases(snap, seed);
@@ -209,6 +263,7 @@ export const api = {
       ...report,
       mode: 'tune',
       fn_cost: cost,
+      seed_notice: rsl.notice,
       counts_before: countsBefore,
       counts_after: countsAfter,
     };
@@ -230,10 +285,13 @@ export const api = {
 
   audit: async (seed) => {
     const snap = await snapshot();
+    const rsl = resolveSeed(snap, seed);
+    seed = rsl.seed;
     const t = getThresholds(snap);
     return {
       entries: buildAudit(snap, seed, t, _state.corrections, _state.tuneEvents),
       note: 'Newest first. Corrections & tunes live in this browser (localStorage) — the demo has no server.',
+      seed_notice: rsl.notice,
       counts: countsFor(snap, seed, t),
     };
   },

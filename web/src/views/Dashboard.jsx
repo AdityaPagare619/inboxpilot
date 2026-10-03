@@ -130,7 +130,10 @@ export default function Dashboard({ seed, onRerun, notify }) {
       </div>
 
       {data.demo_notes?.length > 0 && (
-        <div className="callout amber">🔬 <b>Simulated Jev flips.</b> {data.demo_notes[0]} <span className="mono">seed={data.seed}</span> — hit <b>Re-run triage</b> to roll the dice and watch the ~2% non-determinism move counts.</div>
+        <div className="callout amber">🔬 <b>Simulated Jev flips.</b> {data.demo_notes[0]} <span className="mono">{`seed=${data.seed}`}</span> — hit <b>Re-run triage</b> to roll the dice and watch the ~2% non-determinism move counts.</div>
+      )}
+      {data.seed_notice && (
+        <div className="callout">🔁 {data.seed_notice}</div>
       )}
 
       {/* stats */}

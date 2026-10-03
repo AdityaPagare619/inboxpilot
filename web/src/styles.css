@@ -69,6 +69,10 @@ body {
   border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; background: var(--panel);
   display: flex; align-items: center; gap: 8px; white-space: nowrap;
 }
+button.seed-chip { cursor: pointer; font-family: var(--mono); }
+button.seed-chip:hover { border-color: var(--teal); color: var(--txt); }
+button.seed-chip:hover .seed-reset-hint { opacity: 1; }
+.seed-reset-hint { opacity: 0.35; font-size: 11px; transition: opacity 0.15s; }
 .seed-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 8px var(--teal); }
 
 /* ---------- nav ---------- */

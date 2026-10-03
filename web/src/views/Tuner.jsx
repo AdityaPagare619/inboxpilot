@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { api } from '../api';
+import { api, TUNER_DEFAULTS } from '../api';
 import { Loading, ErrorBox, useApi } from '../components/ui';
-
-const DEFAULTS = { tau_cat: 0.85, tau_noise: 0.95, delta: 0.15 };
 
 function Slider({ label, value, min, max, step, onChange, format, hint }) {
   return (
@@ -74,10 +72,10 @@ function CountBars({ before, after, title }) {
 }
 
 export default function Tuner({ seed, notify }) {
-  const [fnCost, setFnCost] = useState(400);
-  const [tauCat, setTauCat] = useState(DEFAULTS.tau_cat);
-  const [tauNoise, setTauNoise] = useState(DEFAULTS.tau_noise);
-  const [delta, setDelta] = useState(DEFAULTS.delta);
+  const [fnCost, setFnCost] = useState(TUNER_DEFAULTS.fn_cost);
+  const [tauCat, setTauCat] = useState(TUNER_DEFAULTS.tau_cat);
+  const [tauNoise, setTauNoise] = useState(TUNER_DEFAULTS.tau_noise);
+  const [delta, setDelta] = useState(TUNER_DEFAULTS.delta);
   const [preview, setPreview] = useState(null); // {before, after}
   const [previewing, setPreviewing] = useState(false);
   const [report, setReport] = useState(null);
@@ -86,7 +84,7 @@ export default function Tuner({ seed, notify }) {
 
   const { data: inbox, loading: iLoading, error: iError, reload: iReload } = useApi(() => api.inbox(seed), [seed]);
 
-  const baseline = inbox?.thresholds || DEFAULTS;
+  const baseline = inbox?.thresholds || { tau_cat: TUNER_DEFAULTS.tau_cat, tau_noise: TUNER_DEFAULTS.tau_noise, delta: TUNER_DEFAULTS.delta };
 
   // Debounced what-if preview: before = baseline thresholds, after = slider thresholds, same fn cost.
   useEffect(() => {
@@ -119,12 +117,17 @@ export default function Tuner({ seed, notify }) {
         notify({ type: 'warn', msg: '🛑 The tuner refused. It needs more fuel (see below).' });
       }
     } catch (e) {
-      notify({ type: 'bad', msg: `Tune failed: ${e.message}` });
+      notify({ type: 'bad', msg: `❌ Tune failed: ${e.message}` });
       setReport({ applied: false, error: e.message });
     } finally { setApplying(false); }
   }
 
-  const reset = () => { setTauCat(DEFAULTS.tau_cat); setTauNoise(DEFAULTS.tau_noise); setDelta(DEFAULTS.delta); setFnCost(400); };
+  const reset = () => {
+    setTauCat(TUNER_DEFAULTS.tau_cat);
+    setTauNoise(TUNER_DEFAULTS.tau_noise);
+    setDelta(TUNER_DEFAULTS.delta);
+    setFnCost(TUNER_DEFAULTS.fn_cost);
+  };
 
   if (iLoading) return <Loading msg="Loading tuner playground…" />;
   if (iError) return <ErrorBox error={iError} onRetry={iReload} />;
