@@ -52,3 +52,9 @@
 - **API shim functional tests**: `web/tools/test_api.mjs` — 58/58 assertions green (all endpoints, 404/400 error paths, correct→refuse/provisional ladder, tune preview + provisional apply, audit ordering, cost math, seed-flip presence).
 - `vite.config.js` base='/inboxpilot/'; `npm run build` clean (274KB JS, 84KB gzip); local `vite preview` 200s on /, /snapshot.json, /assets.
 - Session state (corrections, applied thresholds, tune events) lives in browser memory + localStorage; UI stays labeled DEMO/keyless. No secrets anywhere in the static bundle.
+
+## Deploy attempt — GitHub Pages BLOCKED on plan (2026-10-03 ~19:10 IST)
+- `gh-pages` branch pushed (built site: index.html, snapshot.json, assets/, .nojekyll) — ready to serve.
+- Pages enable failed: HTTP 422 "Your current plan does not support GitHub Pages for this repository" (repo is private on a free plan).
+- STOPPED per Aditya's standing rules: did NOT flip repo visibility, did NOT try another host. Decision is Aditya's: (a) upgrade GitHub plan, or (b) make inboxpilot public → deploy completes in ~5 min.
+- Live-browser QA (Lane C) not run — no live URL exists; automated QA only (drift check + 58/58 shim assertions + local preview 200s, all green).
