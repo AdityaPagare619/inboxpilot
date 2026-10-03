@@ -1,0 +1,383 @@
+{
+  "_comment": "Fixture founder inbox for InboxPilot tests/demo. No network is ever touched when this fixture is loaded. Messages are ordered newest first. Bodies may be given directly OR as a Gmail-API-style 'payload' (multipart) - the loader extracts text via the same extract_body() the real client uses.",
+  "generated_by": "tests/fixtures/make_fixture.py",
+  "messages": [
+    {
+      "id": "msg-025",
+      "thread_id": "thread-025",
+      "from": "Vikram Rao <ops@acmecorp.com>",
+      "subject": "Re: Northloop dashboard down for our entire team - P0",
+      "date": "2026-10-02T09:41:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "body": "Aarav - following up on my 6am note.\n\nOur entire analytics team (14 people) still cannot load a single dashboard. This is blocking our board prep for Monday. We pay for the Scale plan specifically for the 99.9% uptime SLA, and this is now hour four.\n\nPlease escalate this personally. I need a status update and an ETA within the hour.\n\n- Vikram"
+    },
+    {
+      "id": "msg-024",
+      "thread_id": "thread-024",
+      "from": "Google Accounts <no-reply@accounts.google.com>",
+      "subject": "Security alert: sign-in attempt blocked",
+      "date": "2026-10-02T09:12:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "payload": {
+        "mimeType": "multipart/alternative",
+        "headers": [
+          {
+            "name": "From",
+            "value": "Google Accounts <no-reply@accounts.google.com>"
+          },
+          {
+            "name": "Subject",
+            "value": "Security alert: sign-in attempt blocked"
+          },
+          {
+            "name": "Date",
+            "value": "2026-10-02T09:12:00+05:30"
+          }
+        ],
+        "parts": [
+          {
+            "mimeType": "text/plain",
+            "body": {
+              "data": "SGkgQWFyYXYsCgpXZSBibG9ja2VkIGEgc2lnbi1pbiBhdHRlbXB0IHRvIHlvdXIgTm9ydGhsb29wIEdvb2dsZSBXb3Jrc3BhY2UgYWNjb3VudCBmcm9tCmFuIHVucmVjb2duaXplZCBkZXZpY2UgKENocm9tZSBvbiBXaW5kb3dzLCBMYWdvcywgTmlnZXJpYSkgYXQgMDk6MDIgSVNULgoKSWYgdGhpcyB3YXMgeW91LCBubyBhY3Rpb24gaXMgbmVlZGVkLiBJZiBpdCB3YXNuJ3QsIHBsZWFzZSByZXZpZXcgeW91cgphY2NvdW50IGFjdGl2aXR5IGltbWVkaWF0ZWx5OgpodHRwczovL215YWNjb3VudC5nb29nbGUuY29tL3NlY3VyaXR5CgotIFRoZSBHb29nbGUgQWNjb3VudHMgdGVhbQ"
+            }
+          },
+          {
+            "mimeType": "text/html",
+            "body": {
+              "data": "PGh0bWw-PGJvZHk-PHA-SGkgQWFyYXYsPC9wPjxwPldlIDxiPmJsb2NrZWQgYSBzaWduLWluIGF0dGVtcHQ8L2I-IHRvIHlvdXIKTm9ydGhsb29wIEdvb2dsZSBXb3Jrc3BhY2UgYWNjb3VudCBmcm9tIGFuIHVucmVjb2duaXplZCBkZXZpY2UgKENocm9tZSBvbgpXaW5kb3dzLCBMYWdvcywgTmlnZXJpYSkgYXQgMDk6MDIgSVNULjwvcD48cD5JZiB0aGlzIHdhcyB5b3UsIG5vIGFjdGlvbiBpcwpuZWVkZWQuIElmIGl0IHdhc24ndCwgcGxlYXNlIHJldmlldyB5b3VyIGFjY291bnQgYWN0aXZpdHkgaW1tZWRpYXRlbHkuPC9wPgo8cD4tIFRoZSBHb29nbGUgQWNjb3VudHMgdGVhbTwvcD48L2JvZHk-PC9odG1sPg"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "msg-023",
+      "thread_id": "thread-023",
+      "from": "Sarah Kim <sarah@datasync.io>",
+      "subject": "Re: v2 webhook docs - still waiting",
+      "date": "2026-10-02T08:58:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "body": "Hi Aarav,\n\nPer my last email (and the one before that), we're still waiting on the\nupdated API docs for the v2 webhook payloads. Our team has now missed two\nsprint milestones because the field mappings we built against the January\nspec no longer match what your staging endpoint returns.\n\nTo be clear, I'm not asking for anything new - just documentation for what\nyou already shipped. I've attached our integration test failures for\nreference; happy to walk through them whenever works for you.\n\nCould you please confirm by EOD whether the docs will be ready this week?\nIf not, we'll need to revisit the partnership timeline, which I would\ngenuinely rather not do. DataSync has three enterprise customers waiting on\nthis integration, and I am running out of ways to explain the delay on\nour side.\n\nAppreciate your help here.\n\nBest,\nSarah\n--\nSarah Kim | Head of Partnerships, DataSync Inc.\n\n---\nOn Mon, Sep 28, 2026 at 11:04 AM, Aarav Sharma <aarav@northloop.io> wrote:\n> Hi Sarah - docs are coming, just finalizing the webhook retry semantics\n> with Priya. Should have something for you soon. Sorry for the delay!\n\nOn Mon, Sep 28, 2026 at 2:31 PM, Sarah Kim <sarah@datasync.io> wrote:\n> Thanks Aarav. \"Soon\" was also the answer on Sep 14 and Sep 21, so I\n> hope you'll understand if I need something firmer this time. Even a\n> draft of the payload schema would unblock us.\n\nOn Tue, Sep 29, 2026 at 9:12 AM, Aarav Sharma <aarav@northloop.io> wrote:\n> Fair point. Let me check with Priya today and get back to you.\n\nOn Wed, Sep 30, 2026 at 4:47 PM, Sarah Kim <sarah@datasync.io> wrote:\n> Circling back on this - any update? Our sprint planning is tomorrow\n> morning and I'd love to give the team a date.\n\nOn Thu, Oct 1, 2026 at 10:15 AM, Aarav Sharma <aarav@northloop.io> wrote:\n> Still chasing this internally, will update you shortly.\n\nOn Fri, Oct 2, 2026 at 8:58 AM, Sarah Kim <sarah@datasync.io> wrote:\n> See above. EOD confirmation, please.\n\nP.S. Looping in my CTO (cc'd) so we're all on the same page. He asked me\nthis morning whether we should pause the joint GTM announcement scheduled\nfor Oct 20 - I told him I'd have an answer after I hear from you. No\npressure, but the announcement draft is already with both our PR teams,\nso a slip here gets visible fast. Really hoping we can keep Oct 20."
+    },
+    {
+      "id": "msg-022",
+      "thread_id": "thread-022",
+      "from": "Rahul Verma <rahul.verma@gmail.com>",
+      "subject": "lol you HAVE to see this",
+      "date": "2026-10-02T08:30:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "body": "lol you HAVE to see this 😂\n\nhttps://www.youtube.com/watch?v=dQw4w9WgXcQ\n\nthis is literally us at the last hackathon. we never did fix that demo, did we\n\n- Rahul"
+    },
+    {
+      "id": "msg-021",
+      "thread_id": "thread-021",
+      "from": "Stripe <receipts@stripe.com>",
+      "subject": "Your payout of ₹84,210.00 is on the way",
+      "date": "2026-10-02T07:15:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "body": "Hi Northloop,\n\nA payout of ₹84,210.00 is on the way to your HDFC account ending 8821. It should arrive within 2 business days.\n\n- The Stripe team"
+    },
+    {
+      "id": "msg-020",
+      "thread_id": "thread-020",
+      "from": "AWS Billing <aws-billing@amazon.com>",
+      "subject": "Your AWS invoice for September 2026 is ready",
+      "date": "2026-10-02T06:40:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "payload": {
+        "mimeType": "multipart/mixed",
+        "headers": [
+          {
+            "name": "From",
+            "value": "AWS Billing <aws-billing@amazon.com>"
+          },
+          {
+            "name": "Subject",
+            "value": "Your AWS invoice for September 2026 is ready"
+          },
+          {
+            "name": "Date",
+            "value": "2026-10-02T06:40:00+05:30"
+          }
+        ],
+        "parts": [
+          {
+            "mimeType": "text/plain",
+            "body": {
+              "data": "SGVsbG8sCgpZb3VyIEFXUyBpbnZvaWNlIGZvciBTZXB0ZW1iZXIgMjAyNiBpcyByZWFkeS4KCiAgVG90YWwgZHVlOiAgICAgICAgICAgICQzMTIuNDQKICBDb21wdXRlIChFQzIpOiAgICAgICAgJDE5OC4xMAogIFN0b3JhZ2UgKFMzKTogICAgICAgICAgJDY0LjIwCiAgRGF0YSB0cmFuc2ZlcjogICAgICAgICAkNTAuMTQKClBheW1lbnQgbWV0aG9kOiBWaXNhIGVuZGluZyA0NDEyLiBObyBhY3Rpb24gcmVxdWlyZWQgLSB0aGlzIGludm9pY2Ugd2lsbCBiZQpjaGFyZ2VkIGF1dG9tYXRpY2FsbHkgb24gT2N0IDUuCgpWaWV3IGludm9pY2U6IGh0dHBzOi8vY29uc29sZS5hd3MuYW1hem9uLmNvbS9iaWxsaW5nCgotIEFXUyBCaWxsaW5n"
+            }
+          },
+          {
+            "mimeType": "application/pdf",
+            "filename": "invoice-sep-2026.pdf",
+            "body": {
+              "attachmentId": "ANGjd_J_attachment_1",
+              "size": 48210
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "msg-019",
+      "thread_id": "thread-019",
+      "from": "Rohan Mehta <rohan@peakxv.com>",
+      "subject": "Monthly update - quick ask",
+      "date": "2026-10-01T22:05:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "body": "Hi Aarav,\n\nEnjoyed the September update - the NRR number caught my eye. Quick ask: could you share the split of new vs expansion MRR by Friday? We're putting together the portfolio review deck and I'd love to feature Northloop's expansion motion.\n\nNo rush beyond Friday. And congrats on the Acme logo.\n\nBest,\nRohan"
+    },
+    {
+      "id": "msg-018",
+      "thread_id": "thread-018",
+      "from": "Dana Whitfield <dana@brightcart.com>",
+      "subject": "Question about your pricing tiers",
+      "date": "2026-10-01T20:33:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "body": "Hi!\n\nWe're evaluating Northloop vs Mixpanel for our app (~2M MAU). Quick question: does the Scale plan include SSO and EU data residency? I need to brief our security team on Thursday, so anything you can share before then helps.\n\nThanks!\nDana\nBrightcart"
+    },
+    {
+      "id": "msg-017",
+      "thread_id": "thread-017",
+      "from": "GitHub <notifications@github.com>",
+      "subject": "[northloop/api] Priya Nair requested your review: PR #482",
+      "date": "2026-10-01T19:48:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "body": "Priya Nair requested your review on northloop/api pull request #482: \"fix(webhooks): retry with exponential backoff + jitter\".\n\n2 files changed, 84 additions. CI is green.\n\nhttps://github.com/northloop/api/pull/482"
+    },
+    {
+      "id": "msg-016",
+      "thread_id": "thread-016",
+      "from": "Priya Nair <priya@northloop.io>",
+      "subject": "Re: Launch checklist - migration confirmed",
+      "date": "2026-10-01T18:20:00+05:30",
+      "labels": [
+        "INBOX"
+      ],
+      "body": "Confirming the migration script ran clean on staging - all 14k workspaces migrated, zero errors. We're good for Thursday.\n\n(And yes, to your question: the rollback plan was tested twice. We're covered.)\n\n- P"
+    },
+    {
+      "id": "msg-015",
+      "thread_id": "thread-015",
+      "from": "Northloop Support <support@northloop.io>",
+      "subject": "Ticket #3109: Can't reset my password - locked out",
+      "date": "2026-10-01T17:02:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "body": "New high-priority ticket from a Scale-plan admin (meera@finlytics.com):\n\n\"I've tried the password reset link 4 times and it keeps saying expired. I'm the only admin and my team can't log in. Please help ASAP.\"\n\nTicket auto-assigned to the on-call queue."
+    },
+    {
+      "id": "msg-014",
+      "thread_id": "thread-014",
+      "from": "Google Accounts <no-reply@accounts.google.com>",
+      "subject": "New sign-in from Chrome on Mac",
+      "date": "2026-10-01T16:44:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "body": "Hi Aarav,\n\nYour Google Account was just signed in to from a new device:\n  Chrome on Mac · Mumbai, India · Oct 1, 4:44 PM IST\n\nIf this was you, you can ignore this. Wasn't you? Secure your account: https://myaccount.google.com/security"
+    },
+    {
+      "id": "msg-013",
+      "thread_id": "thread-013",
+      "from": "Northloop Billing <billing@northloop.io>",
+      "subject": "Payment failed for Northloop Pro (Figma)",
+      "date": "2026-10-01T15:30:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "body": "Hi Aarav,\n\nWe tried to charge ₹4,590.00 to your Visa ending 4412 for Figma (Northloop Pro, annual) but the payment failed.\n\nPlease update your payment method within 7 days to avoid interruption: https://billing.northloop.io\n\n- Northloop Billing (via Figma)"
+    },
+    {
+      "id": "msg-012",
+      "thread_id": "thread-012",
+      "from": "Priya Nair <priya@northloop.io>",
+      "subject": "Standup notes - Oct 1",
+      "date": "2026-10-01T14:12:00+05:30",
+      "labels": [
+        "INBOX"
+      ],
+      "body": "Standup notes:\n- Webhook retry PR (#482) merged, deploying to staging today\n- Acme onboarding call moved to Monday\n- Design intern shortlist: 3 candidates, loom links in Notion\n- Reminder: metrics for Rohan by Friday"
+    },
+    {
+      "id": "msg-011",
+      "thread_id": "thread-011",
+      "from": "Figma <notifications@figma.com>",
+      "subject": "Your Northloop Pro subscription renews in 7 days",
+      "date": "2026-10-01T13:05:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "body": "Hi there,\n\nYour Figma Northloop Pro subscription renews on Oct 8, 2026 for ₹4,590.00/year. We'll charge the Visa ending 4412 on file.\n\nManage subscription: https://figma.com/settings/billing"
+    },
+    {
+      "id": "msg-010",
+      "thread_id": "thread-010",
+      "from": "TechCrunch <newsletters@techcrunch.com>",
+      "subject": "TechCrunch Daily: AI agents raise $2B in Q3",
+      "date": "2026-10-01T11:26:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "body": "Today's top stories:\n1. AI agent startups raised $2B in Q3, up 3x YoY\n2. Peak XV closes $1.2B new fund\n3. The quiet boom in vertical analytics tools\n\nRead more: https://techcrunch.com/daily"
+    },
+    {
+      "id": "msg-009",
+      "thread_id": "thread-009",
+      "from": "Notion <notify@mail.notion.so>",
+      "subject": "Last chance: 50% off Notion annual plans ends today",
+      "date": "2026-10-01T10:15:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "body": "Don't miss out! Get 50% off Notion Plus annual plans - offer ends tonight at midnight.\n\nUpgrade: https://notion.so/upgrade\n\nYou're receiving this because you have a Notion account."
+    },
+    {
+      "id": "msg-008",
+      "thread_id": "thread-008",
+      "from": "LinkedIn <notifications-noreply@linkedin.com>",
+      "subject": "12 people viewed your profile this week",
+      "date": "2026-10-01T09:40:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "body": "Hi Aarav,\n\n12 people viewed your profile in the last 7 days, including 3 founders and 2 investors.\n\nSee who's been checking you out: https://linkedin.com/me"
+    },
+    {
+      "id": "msg-007",
+      "thread_id": "thread-007",
+      "from": "Y Combinator <events@ycombinator.com>",
+      "subject": "You're invited: How to price your seed round (Oct 9)",
+      "date": "2026-09-30T18:22:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "body": "Join YC partners for a live session on seed-round pricing, Oct 9 at 9pm IST.\n\nAgenda: valuation benchmarks, SAFE vs priced rounds, what actually matters to investors.\n\nRSVP: https://ycombinator.com/events"
+    },
+    {
+      "id": "msg-006",
+      "thread_id": "thread-006",
+      "from": "Crypto Promo <promo@totally-legit-giveaway.xyz>",
+      "subject": "ELON MUSK CRYPTO GIVEAWAY - DOUBLE YOUR BTC!!!",
+      "date": "2026-09-30T17:50:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "payload": {
+        "mimeType": "text/html",
+        "headers": [
+          {
+            "name": "From",
+            "value": "Crypto Promo <promo@totally-legit-giveaway.xyz>"
+          },
+          {
+            "name": "Subject",
+            "value": "ELON MUSK CRYPTO GIVEAWAY - DOUBLE YOUR BTC!!!"
+          },
+          {
+            "name": "Date",
+            "value": "2026-09-30T17:50:00+05:30"
+          }
+        ],
+        "body": {
+          "data": "PGh0bWw-PGJvZHk-PGgxPkVMT04gTVVTSyBDUllQVE8gR0lWRUFXQVkhISE8L2gxPjxwPlNlbmQgPGI-MC4xIEJUQzwvYj4KdG8gPGI-MU11c2tHaXZlYXdheVg5ZjJrTDwvYj4gYW5kIHJlY2VpdmUgPGI-MC4yIEJUQzwvYj4gYmFjayBJTlNUQU5UTFkhClZlcmlmaWVkIGJ5IFRlc2xhICZhbXA7IFNwYWNlWCEhITwvcD48cD48YSBocmVmPSJodHRwOi8vdG90YWxseS1sZWdpdC1naXZlYXdheS54eXoiPgpDTEFJTSBZT1VSIERPVUJMRSBCSVRDT0lOIE5PVzwvYT48L3A-PHA-PGk-TGltaXRlZCB0aW1lIG9mZmVyISEhIEFjdCBmYXN0ISEhPC9pPgo8L3A-PC9ib2R5PjwvaHRtbD4"
+        }
+      }
+    },
+    {
+      "id": "msg-005",
+      "thread_id": "thread-005",
+      "from": "Ananya Rao <ananya.rao@talentbridge.in>",
+      "subject": "Staff Engineer roles at FAANG - 15 min chat?",
+      "date": "2026-09-30T16:30:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "body": "Hi Aarav,\n\nI came across your profile and was impressed by your background! I have several Staff Engineer openings at top product companies with 80L+ packages.\n\nAre you open to a 15-min chat this week?\n\nBest,\nAnanya\nTalentBridge"
+    },
+    {
+      "id": "msg-004",
+      "thread_id": "thread-004",
+      "from": "IndiGo <bookings@goindigo.in>",
+      "subject": "Booking confirmed: BOM to BLR, Oct 18 (PNR XJ8K2Q)",
+      "date": "2026-09-30T15:12:00+05:30",
+      "labels": [
+        "INBOX"
+      ],
+      "body": "Hi Aarav Sharma,\n\nYour booking is confirmed.\n  6E-6143 · BOM → BLR · Oct 18, 07:10 - 08:55\n  PNR: XJ8K2Q · Seat 14A\n\nManage booking: https://goindigo.in"
+    },
+    {
+      "id": "msg-003",
+      "thread_id": "thread-003",
+      "from": "Segment <updates@segment.com>",
+      "subject": "We've updated our Terms of Service",
+      "date": "2026-09-30T14:05:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "body": "Hi there,\n\nWe've updated our Terms of Service, effective Nov 1, 2026. Key changes: updated data processing addendum for the EU, clarified SLA credits.\n\nNo action is required. Read the updated terms: https://segment.com/legal"
+    },
+    {
+      "id": "msg-002",
+      "thread_id": "thread-002",
+      "from": "Google Calendar <calendar-noreply@google.com>",
+      "subject": "Invitation: Board meeting - Q4 planning @ Mon Oct 5, 10am",
+      "date": "2026-09-30T12:30:00+05:30",
+      "labels": [
+        "INBOX"
+      ],
+      "body": "You have been invited to:\n  Board meeting - Q4 planning\n  Monday, Oct 5, 2026, 10:00 AM - 12:00 PM IST\n  Organizer: Priya Nair\n\nPlease RSVP in Google Calendar."
+    },
+    {
+      "id": "msg-001",
+      "thread_id": "thread-001",
+      "from": "Kabir Singh <kabir.singh.design@gmail.com>",
+      "subject": "Application: Design Intern, Winter 2026",
+      "date": "2026-09-30T09:15:00+05:30",
+      "labels": [
+        "INBOX",
+        "UNREAD"
+      ],
+      "body": "Hi Aarav,\n\nI'm a 3rd-year design student applying for the Winter design intern role. Portfolio: https://kabirsingh.design\n\nI've been using Northloop for a class project and have a few ideas for the onboarding flow I'd love to share.\n\nThanks for considering!\nKabir"
+    }
+  ]
+}
